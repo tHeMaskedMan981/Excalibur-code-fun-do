@@ -38,5 +38,5 @@
 ##### Tech-Stack to be Used:
 - Ethereum (for blockchain & smart contracts)
 - Microsoft Azure (for deployment)
-- AngularJS (for front-end)
-- FastAPI (for back-end) 
+- Angular (for front-end)
+- Django (for back-end) 
