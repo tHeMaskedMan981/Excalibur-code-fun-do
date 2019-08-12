@@ -1,7 +1,5 @@
-node_modules
-
-django/env
-
-__pycache__
-
-
+node_modules/
+.env
+env/
+.vscode/
+__pycache__/
