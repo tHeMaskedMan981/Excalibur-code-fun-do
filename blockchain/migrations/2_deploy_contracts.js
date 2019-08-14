@@ -1,5 +1,5 @@
-var HelloBlockchain = artifacts.require("./HelloBlockchain.sol");
+var Election = artifacts.require("./Election.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(HelloBlockchain,"this is a secret message");
+  deployer.deploy(Election,"this is a secret message");
 };

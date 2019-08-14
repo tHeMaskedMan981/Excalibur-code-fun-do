@@ -10,7 +10,7 @@ module.exports = {
     },
     election2: {
       network_id: "*",
-      gas: 80000000,
+      gas: 6000000,
       gasPrice: 0,
       provider: new HDWalletProvider(fs.readFileSync('/home/akash/Videos/Excalibur-code-fun-do/blockchain/election.env', 'utf-8'), "https://akash.blockchain.azure.com:3200/WsUdgDBd0FSR3QjR6-4RQ707"),
       consortium_id: 1565635202622
