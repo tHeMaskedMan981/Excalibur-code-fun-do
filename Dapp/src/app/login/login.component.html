@@ -1,0 +1,22 @@
+<div>
+  <!-- <input #heroName /> -->
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Adhaar Number" #an>
+    </mat-form-field>
+    <br />
+    <button class="add-button" class="example-full-width" mat-raised-button color="primary" (click)="send_otp(an.value);">
+      Receive OTP
+    </button>
+    <br />
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="6-digit OTP" #otp>
+    </mat-form-field>
+    <br />
+      <button class="add-button" mat-raised-button color="primary" (click)="verify_otp(otp.value); otp.value=''">
+        Submit
+      </button>
+  </form>
+<!-- (click) passes input value to add() and then clears the input -->
+
+</div>

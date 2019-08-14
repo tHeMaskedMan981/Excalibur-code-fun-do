@@ -1,0 +1,63 @@
+<div *ngIf=(!model.submitted)>
+
+  <!-- <input #heroName /> -->
+  <form  class="example-form">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Full Name" #fn>
+    </mat-form-field>
+    <br />
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Adhaar Number" #an>
+    </mat-form-field>
+    <br />
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Phone number" #pn>
+    </mat-form-field>
+    <br />
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Age" #age>
+    </mat-form-field>
+    <br />
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Gmail" #gm>
+    </mat-form-field>
+    <br />
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Address" #ad>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Password" #pass type="password">
+    </mat-form-field>
+    <br />
+    <button class="add-button" mat-raised-button color="primary" (click)="add(fn.value,an.value,pn.value,age.value,gm.value,ad.value,pass.value);">
+      Submit
+    </button>
+  </form>
+<!-- (click) passes input value to add() and then clears the input -->
+
+</div>
+
+<!-- <div *ngIf=(model.submitted)> -->
+<div >
+<h3> Kyc Verification Status </h3>
+<form  class="example-form">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Adhaar Number" #anv (change)="set_uuid($event)">
+    </mat-form-field>
+    <br />
+    <button class="add-button" mat-raised-button color="primary" (click)="verify(anv.value); anv.value=''">
+      Check KYC Verification Status
+    </button>
+  </form>
+</div>
+
+
+<div *ngIf=(model.show_status)>
+    <div *ngIf=(!model.kyc_done)>
+        <p> Verification Peding. Check after some time</p>
+    </div>
+    <div *ngIf=(model.kyc_done)>
+        <p> Kyc Verified! </p>
+    </div>
+
+</div>
