@@ -1,5 +1,7 @@
-var Election = artifacts.require("./Election.sol");
+var Election = artifacts.require("Election");
+var VoterData = artifacts.require("VoterData");
 
 module.exports = function(deployer) {
-  deployer.deploy(Election,"this is a secret message");
+  deployer.deploy(Election);
+  deployer.deploy(VoterData);
 };
