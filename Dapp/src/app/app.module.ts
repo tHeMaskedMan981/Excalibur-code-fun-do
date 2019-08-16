@@ -37,6 +37,7 @@ import { AdminComponent } from "./admin/admin.component";
 import { HomeComponent } from "./home/home.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { UserLoginComponent } from "./user-login/user-login.component";
+import { KycVerifierComponent } from './kyc-verifier/kyc-verifier.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { UserLoginComponent } from "./user-login/user-login.component";
     AdminComponent,
     HomeComponent,
     DashboardComponent,
-    UserLoginComponent
+    UserLoginComponent,
+    KycVerifierComponent
   ],
   imports: [
     BrowserAnimationsModule,

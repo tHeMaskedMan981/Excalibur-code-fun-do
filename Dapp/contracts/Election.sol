@@ -92,43 +92,13 @@ contract Election {
         kycDone[uuid_hash] = true;
     }
 
-    function openVault(uint256 _startTime, uint256 _closureTime) public onlyEcHead {
-        require(!vaultSealed);
-        require(!isVaultOpened);
-        require(_startTime >= uint256(now)); 
-        require(_closureTime >= uint256(now)); 
-        require(_closureTime >= _startTime);    
-        
-        beginTime = _startTime; 
-        endTime = _closureTime;
-        isVaultOpened = true; 
-    }
-
-    function closeVault() public onlyEcHead {
-        // can use this function to end the voting process immediately in case of some emergency
-        // but this should not be misused by the ec head to stop it anytime and calculate the votes.
-        // can include a multisig over here
-        require(!vaultSealed);
-        require(isVaultOpened); 
-        
-        endTime = uint256(now);
-        isVaultOpened = false; 
-    }
-
-    function sealVault() public onlyEcHead {
-        require(!vaultSealed); 
-        endTime = uint256(now);
-        vaultSealed = true; 
-        isVaultOpened = false; 
-    }
-
     function registerVote(bytes32 uuid_hash, string memory constituency, string memory party,  bytes32 vote_hash) public {
         // require(!vaultSealed);
         // require(isVaultOpened);
         // require(beginTime <= uint256(now), "The elections haven't started yet"); 
         // require(endTime >= uint256(now), "The election period is over");
-        // require(kycDone[uuid_hash], "KYC process is not complete for this voter");
-        // require(!(hasVoted[uuid_hash]), "The voter has already voted. Aborting.");
+        require(kycDone[uuid_hash], "KYC process is not complete for this voter");
+        require(!(hasVoted[uuid_hash]), "The voter has already voted. Aborting.");
 
         vote_hashes[constituency][party].push(vote_hash);
         voterCount++;
@@ -175,23 +145,4 @@ library SafeMath {
       assert(c >= a);
       return c;
     }
-
-//     function substring(string str, uint startIndex, uint endIndex) constant returns (string) {
-//     bytes memory strBytes = bytes(str);
-//     bytes memory result = new bytes(endIndex-startIndex);
-//     for(uint i = startIndex; i < endIndex; i++) {
-//         result[i-startIndex] = strBytes[i];
-//     }
-//     return string(result);
-// }
-
-// for removing something from an array. instead of shifting, just replace it with last element and 
-// decrease the length by 1
-// for (uint i = 0; i < vaultOwners.length; i++) {
-//             if (vaultOwners[i] == _owner) {
-//                 vaultOwners[i] = vaultOwners[vaultOwners.length - 1];
-//                 vaultOwners.length -= 1;
-//                 break;
-//             }
-//         } 
 }

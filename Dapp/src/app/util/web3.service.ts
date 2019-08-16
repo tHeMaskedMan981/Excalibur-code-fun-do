@@ -126,5 +126,10 @@ export class Web3Service {
         return window.web3.currentProvider;
     }
 
+    // Get the Nonce of an account
+    public async getNonce(account) {
+        const nonce = await window.web3.eth.getTransactionCount(account);
+        return nonce;
+    }
 
 }

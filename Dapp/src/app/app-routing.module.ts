@@ -8,10 +8,12 @@ import { KycComponent } from './kyc/kyc.component';
 import { AdminComponent } from './admin/admin.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { KycVerifierComponent } from './kyc-verifier/kyc-verifier.component';
 
 
 const routes: Routes = [
   { path: 'kyc', component: KycComponent },
+  { path: 'kycverifier', component: KycVerifierComponent },
   { path: 'login', component: LoginComponent },
   { path: 'user-login', component: UserLoginComponent },
   { path: 'dashboard', component: DashboardComponent },

@@ -1,8 +1,7 @@
-// var ConvertLib = artifacts.require("./ConvertLib.sol");
-var Election = artifacts.require("./Election.sol");
+var Election = artifacts.require("Election");
+var VoterData = artifacts.require("VoterData");
 
 module.exports = function(deployer) {
-//   deployer.deploy(ConvertLib);
-//   deployer.link(ConvertLib, MetaCoin);
   deployer.deploy(Election);
+  deployer.deploy(VoterData);
 };
