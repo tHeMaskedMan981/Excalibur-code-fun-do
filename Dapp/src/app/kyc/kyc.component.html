@@ -1,4 +1,8 @@
-<div *ngIf=(!model.submitted)>
+<mat-card>
+<mat-card-header class="header">Voter Registration</mat-card-header>
+<br />
+  <mat-card-content>
+  <div *ngIf=(!model.submitted)>
 
   <!-- <input #heroName /> -->
   <form  class="example-form">
@@ -37,19 +41,36 @@
 
 </div>
 
-<!-- <div *ngIf=(model.submitted)> -->
-<div >
-<h3> Kyc Verification Status </h3>
+  </mat-card-content>
+</mat-card>
+
+
+<br />
+<br />
+
+<mat-card>
+<mat-card-header class="header">Kyc Verification Status</mat-card-header>
+<br />
+  <mat-card-content>
 <form  class="example-form">
     <mat-form-field class="example-full-width">
       <input matInput placeholder="Adhaar Number" #anv (change)="set_uuid($event)">
     </mat-form-field>
     <br />
     <button class="add-button" mat-raised-button color="primary" (click)="verify(anv.value); anv.value=''">
-      Check KYC Verification Status
+      Check Status
     </button>
   </form>
-</div>
+  </mat-card-content>
+</mat-card> 
+
+
+<mat-card>
+<mat-card-header class="header"></mat-card-header>
+<br />
+  <mat-card-content>
+  </mat-card-content>
+</mat-card> 
 
 
 <div *ngIf=(model.show_status)>

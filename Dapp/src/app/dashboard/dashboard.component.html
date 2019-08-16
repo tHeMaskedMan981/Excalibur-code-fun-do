@@ -1,0 +1,42 @@
+<div>
+<br />
+<br />
+<p class="header"> Hello {{user.name}}  </p>
+
+<p class="basic-text">Voter details : </p> 
+<p> test : {{model.kyc_object}} </p>
+<p> UUID : {{user.uuid}} </p>
+<p> Date of Birth : {{user.dob}} </p>
+<p> Constituency : {{user.constituency}} </p>
+<p> Address : {{user.address}} </p>
+
+<br />
+<br />
+
+
+</div>
+
+<mat-card>
+  <mat-card-header><span class="span"></span></mat-card-header>
+  <br />
+  <button mat-button color="accent" id="requestViewAccess"
+                    (click)="getResult()">Refresh</button>
+  <br />
+  <mat-card-content>
+  <br />
+   
+  </mat-card-content>
+</mat-card>
+
+  <mat-card>
+<mat-card-header class="header"> Calculate Vote Hash </mat-card-header>
+<br />
+  <mat-card-content>
+    
+  </mat-card-content>
+</mat-card> 
+
+
+
+  
+  
