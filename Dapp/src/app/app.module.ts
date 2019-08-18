@@ -3,8 +3,10 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import {
   MatButtonModule,
+  MatNativeDateModule,
   MatFormFieldModule,
   MatCheckboxModule,
   MatInputModule,
@@ -23,7 +25,7 @@ import {
   MatMenuModule,
   MatChipsModule
 } from "@angular/material";
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import { AppComponent } from "./app.component";
 import { MetaModule } from "./meta/meta.module";
 import { CommonModule } from "@angular/common";
@@ -58,8 +60,11 @@ import { KycVerifierComponent } from './kyc-verifier/kyc-verifier.component';
     CommonModule,
     MatButtonModule,
     MatCardModule,
+    MatDatepickerModule,
+    // MatMomentDateModule,
     MatFormFieldModule,
     MatInputModule,
+    MatNativeDateModule,
     MatToolbarModule,
     BrowserModule,
     FormsModule,
@@ -80,7 +85,7 @@ import { KycVerifierComponent } from './kyc-verifier/kyc-verifier.component';
     MatMenuModule,
     MatChipsModule
   ],
-  providers: [],
+  providers: [MatMomentDateModule],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -4,6 +4,9 @@
   <br />
   <mat-card-header class="header"> Unverified Voters: </mat-card-header>
   <br />
+  <span ><button class="add-button" mat-raised-button color="primary" (click)="getVoterList()">
+       Refresh </button></span>
+  <br />
   <mat-card-content>
     <table mat-table [dataSource] = "unverifiedVoters" class="mat-elevation-z8">
       <ng-container matColumnDef="Name">
@@ -16,7 +19,7 @@
       </ng-container>
       <ng-container matColumnDef="Date of Birth">
         <th mat-header-cell *matHeaderCellDef> <b>Date of Birth</b> </th>
-        <td mat-cell *matCellDef="let element"> {{element.dob}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.dob_string}} </td>
       </ng-container>
       <ng-container matColumnDef="Address">
         <th mat-header-cell *matHeaderCellDef> <b>Address</b> </th>
@@ -29,11 +32,10 @@
       <ng-container matColumnDef="Status">
         <th mat-header-cell *matHeaderCellDef> <b>KYC Status</b> </th>
         <td mat-cell *matCellDef="let element">
-          <button *ngIf="element.verification_status === 'unverified'" class="add-button" mat-raised-button color="primary" (click)="verify(element)">
+          <button *ngIf="!element.verification_status" class="add-button" mat-raised-button color="primary" (click)="verify(element)">
             Verify
           </button>
-          <span *ngIf = "element.verification_status === 'underProcess'">Under Process...</span>
-          <span *ngIf = "element.verification_status === 'verified'">Verified!</span>
+          <span *ngIf = "element.verification_status">Verified!</span>
         </td>
       </ng-container>
 

@@ -1,42 +1,153 @@
-<div>
+<mat-card *ngIf="!this.model.uuid">
+<mat-card-header class="header">User Login </mat-card-header>
 <br />
-<br />
-<p class="header"> Hello {{user.name}}  </p>
-
-<p class="basic-text">Voter details : </p> 
-<p> test : {{model.kyc_object}} </p>
-<p> UUID : {{user.uuid}} </p>
-<p> Date of Birth : {{user.dob}} </p>
-<p> Constituency : {{user.constituency}} </p>
-<p> Address : {{user.address}} </p>
-
-<br />
-<br />
-
+  <mat-card-content>
+  <div>
+  <!-- <input #heroName /> -->
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Adhaar Number" #an>
+    </mat-form-field>
+    <br />
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Password" #pass type="password">
+    </mat-form-field>
+    <br />
+      <button class="add-button" mat-raised-button color="primary" (click)="login(an.value, pass.value);">
+        Submit
+      </button>
+  </form>
+<!-- (click) passes input value to add() and then clears the input -->
 
 </div>
-
-<mat-card>
-  <mat-card-header><span class="span"></span></mat-card-header>
-  <br />
-  <button mat-button color="accent" id="requestViewAccess"
-                    (click)="getResult()">Refresh</button>
-  <br />
-  <mat-card-content>
-  <br />
-   
-  </mat-card-content>
-</mat-card>
-
-  <mat-card>
-<mat-card-header class="header"> Calculate Vote Hash </mat-card-header>
-<br />
-  <mat-card-content>
-    
   </mat-card-content>
 </mat-card> 
 
 
 
+
+
+<mat-card *ngIf="this.model.uuid">
+  <mat-card-header class="header"> Hello {{user.name}} </mat-card-header>
   
-  
+  <br />
+  <mat-card-header class="header"> Voter details : </mat-card-header>
+  <br />
+  <mat-card-content>
+    <div>
+      <br />
+      <p> <span class="lhs_text">UUID :</span> <span class="basic_text">{{user.uuid}}</span></p>
+      <p> <span class="lhs_text"> Date of Birth </span> : {{user.dob_string}} </p>
+      <p> <span class="lhs_text"> Constituency </span> : {{user.constituency}} </p>
+      <p> <span class="lhs_text"> Address </span>  : {{user.address}} </p>
+
+      <br />
+      <br />
+      <p *ngIf="user.verification_status"> <span class="lhs_text"> Verification Status  </span> : Verified </p>
+      <p *ngIf="!user.verification_status"> <span class="lhs_text"> Verification Status  </span> : Not Verified
+       <span ><button class="add-button" mat-raised-button color="primary" (click)="refreshVerificationStatus()">
+       Refresh </button></span>
+      </p>
+      <p *ngIf="user.verification_status"> <span class="lhs_text"> Voter ID : </span>  {{user.voter_id}} 
+        <span *ngIf="!user.is_eligible"> Not eligible to vote. Age should be above 18 years.</span>
+        <span *ngIf="user.voter_id==null && user.is_eligible">
+          <button class="add-button" mat-raised-button color="primary" (click)="getVoterId()">
+          Get Voter ID
+          </button>
+        </span>
+       </p>
+       <br />
+       <br />
+       <span ><button class="add-button" mat-raised-button color="primary" (click)="logout()">
+       Logout </button></span>
+       <br />
+       <br />
+    </div>
+  </mat-card-content>
+</mat-card> 
+
+
+
+
+<mat-card *ngIf="this.model.uuid && user.voter_id">
+<mat-card-header class="header"> Elections </mat-card-header>
+<br />
+  <mat-card-content>
+  <button class="add-button" mat-raised-button color="primary" (click)="refreshElections()">
+          Refresh
+  </button>
+  <br />
+  <br />
+  <table mat-table [dataSource] = "elections" class="mat-elevation-z8">
+      <ng-container matColumnDef="Label">
+        <th mat-header-cell *matHeaderCellDef> <b>Label</b> </th>
+        <td mat-cell *matCellDef="let election" > {{election.label}} </td>
+      </ng-container>
+      <ng-container matColumnDef="Start Time">
+        <th mat-header-cell *matHeaderCellDef> <b>Start Time</b> </th>
+        <td mat-cell *matCellDef="let election"> {{election.start_time}} </td>
+      </ng-container>
+      <ng-container matColumnDef="End Time">
+        <th mat-header-cell *matHeaderCellDef> <b>End Time</b> </th>
+        <td mat-cell *matCellDef="let election"> {{election.end_time}} </td>
+      </ng-container>   
+      <ng-container matColumnDef="Action">
+        <th mat-header-cell *matHeaderCellDef> <b> Action </b> </th>
+        <td mat-cell *matCellDef="let election">
+          <span *ngIf="election.status==0"> 
+        Election yet to start. 
+      </span>
+      <span *ngIf="election.status==1"> 
+      <button class="add-button" mat-raised-button color="primary" (click)="vote()">
+          Vote
+          </button>
+      </span>
+      <span *ngIf="election.status==2"> 
+      <button class="add-button" mat-raised-button color="primary" (click)="getResults()">
+          Results
+          </button>
+      </span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </mat-card-content>
+</mat-card> 
+
+
+
+<mat-card *ngIf="this.model.uuid && user.voter_id && false">
+  <mat-card-header class="header"> Elections </mat-card-header>
+  <br />
+  <mat-card-content>
+    <div *ngFor="let election of elections">
+      <span class="small_header"> {{election.label}} </span>
+      <br />
+      <br />
+      <span> Start Time : {{election.start_time}} </span>
+      <span> End Time : {{election.end_time}} </span> 
+      <br />
+      <br />
+      <span *ngIf="election.status==0"> 
+        Election yet to start. 
+      </span>
+      <span *ngIf="election.status==1"> 
+      <button class="add-button" mat-raised-button color="primary" (click)="vote()">
+          Vote
+          </button>
+      </span>
+      <span *ngIf="election.status==2"> 
+      <button class="add-button" mat-raised-button color="primary" (click)="getResults()">
+          Results
+          </button>
+      </span> 
+      <br />
+      <br />  
+      <br />
+      <br />
+    </div>
+  </mat-card-content>
+</mat-card> 

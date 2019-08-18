@@ -52,29 +52,29 @@ contract('Election', (accounts) => {
             var is_official = await ElectionInstance.ec_officials.call(ec_official);
             assert.equal(is_official, true, "EC official not set correctly");
         });
-        it('should add kyc verifier correctly', async () => {
-            // const ElectionInstance = await Election.deployed();
+        // it('should add kyc verifier correctly', async () => {
+        //     // const ElectionInstance = await Election.deployed();
 
-            const is_official = await ElectionInstance.ec_officials.call(ec_official);
-            assert.equal(is_official, true, "EC official not set correctly");
-            await ElectionInstance.addKycVerifier(kyc_verifier, { from: ec_official });
-            var is_verifier = await ElectionInstance.kyc_verifiers.call(kyc_verifier);
-            assert.equal(is_verifier, true, "kyc verifier not set correctly");
-        });
-        it('should do kyc verification correctly', async () => {
+        //     const is_official = await ElectionInstance.ec_officials.call(ec_official);
+        //     assert.equal(is_official, true, "EC official not set correctly");
+        //     await ElectionInstance.addKycVerifier(kyc_verifier, { from: ec_official });
+        //     var is_verifier = await ElectionInstance.kyc_verifiers.call(kyc_verifier);
+        //     assert.equal(is_verifier, true, "kyc verifier not set correctly");
+        // });
+        // it('should do kyc verification correctly', async () => {
 
-            await ElectionInstance.kycVerify(uuid_hash_1, { from: kyc_verifier });
-            await ElectionInstance.kycVerify(uuid_hash_2, { from: kyc_verifier });
-            await ElectionInstance.kycVerify(uuid_hash_3, { from: kyc_verifier });
+        //     await ElectionInstance.kycVerify(uuid_hash_1, { from: kyc_verifier });
+        //     await ElectionInstance.kycVerify(uuid_hash_2, { from: kyc_verifier });
+        //     await ElectionInstance.kycVerify(uuid_hash_3, { from: kyc_verifier });
 
-            var is_verified_1 = await ElectionInstance.kycDone.call(uuid_hash_1);
-            var is_verified_2 = await ElectionInstance.kycDone.call(uuid_hash_2);
-            var is_verified_3 = await ElectionInstance.kycDone.call(uuid_hash_3);
+        //     var is_verified_1 = await ElectionInstance.kycDone.call(uuid_hash_1);
+        //     var is_verified_2 = await ElectionInstance.kycDone.call(uuid_hash_2);
+        //     var is_verified_3 = await ElectionInstance.kycDone.call(uuid_hash_3);
 
-            assert.equal(is_verified_1, true, "kyc verification not done correctly");
-            assert.equal(is_verified_2, true, "kyc verification not done correctly");
-            assert.equal(is_verified_3, true, "kyc verification not done correctly");
-        });
+        //     assert.equal(is_verified_1, true, "kyc verification not done correctly");
+        //     assert.equal(is_verified_2, true, "kyc verification not done correctly");
+        //     assert.equal(is_verified_3, true, "kyc verification not done correctly");
+        // });
         it('should add constituency and party correctly', async () => {
 
             await ElectionInstance.addConstituency("banglore", { from: ec_official });
@@ -130,6 +130,10 @@ contract('Election', (accounts) => {
             var roorkee_congress_votes = await ElectionInstance.getVoteHashes.call("roorkee", "congress");
             var roorkee_bsp_votes = await ElectionInstance.getVoteHashes.call("roorkee", "bsp");
             var roorkee_bjp_votes = await ElectionInstance.getVoteHashes.call("roorkee", "bjp");
+
+            console.log("roorkee congress : ", roorkee_congress_votes);
+            console.log("roorkee bsp : ", roorkee_bsp_votes);
+            console.log("roorkee bjp : ", roorkee_bjp_votes);
 
             assert.equal(roorkee_congress_votes[0], vote_hash1, "vote hashes not set correctly");
             assert.equal(roorkee_congress_votes[1], vote_hash2, "vote hashes not set correctly");

@@ -1,82 +1,52 @@
-<div >
-<h3> Get Voting Information </h3>
-<form  class="example-form">
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Adhaar Number" #anv (change)="setUuid($event)">
-    </mat-form-field>
+<mat-card>
+  <mat-card-header class="header"> Voting Page </mat-card-header>
+  
+  <br />
+  <br />
+  <mat-card-content>
+
+    <p *ngIf="user.verification_status"> <span class="lhs_text"> Voter ID : </span>  {{user.voter_id}} 
+    </p> 
+    <br />  
+    <br /> 
+    <div *ngIf="model.has_voted">
+    <p class="basic_text"> You have already voted. Only one vote is allowed per voter. </p>
+  </div>
+    <div *ngIf=(model.show_voting_info)>
+
+      <mat-select name="candidates" (selectionChange)="setSelectedCandidate($event)" placeholder="Select Candidate">
+          <mat-option *ngFor="let candidate of model.candidates" [value]="candidate.party">
+                    {{candidate.candidate_name}}  |  {{candidate.party}}  |  {{candidate.age}}
+                </mat-option>
+      </mat-select>
+
     <br />
-    <button class="add-button" mat-raised-button color="primary" (click)="get_info();">
-      Get Voting Info
-    </button>
-  </form>
-</div>
-
-<br>
-<br>
-<div *ngIf=(model.show_voting_info)>
-
-  <mat-select name="candidates" (selectionChange)="setSelectedCandidate($event)" placeholder="Vote for a Candidate">
-			<mat-option *ngFor="let candidate of model.candidates" [value]="candidate.party">
-                {{candidate.candidate_name}}  |  {{candidate.party}}  |  {{candidate.age}}
-            </mat-option>
-  </mat-select>
-  <!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8"> -->
-
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-  
-    <!-- Position Column -->
-    <!-- <ng-container matColumnDef="position">
-      <th mat-header-cell *matHeaderCellDef> No. </th>
-      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-    </ng-container> -->
-  
-    <!-- Name Column -->
-    <!-- <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Party Name </th>
-      <td mat-cell *ngFor="let candidate of model.candidates"> {{candidata.name}} </td>
-    </ng-container> -->
-  
-    <!-- Weight Column -->
-    <!-- <ng-container matColumnDef="weight">
-      <th mat-header-cell *matHeaderCellDef> Winning Party </th>
-      <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-    </ng-container> -->
-  
-    <!-- Symbol Column -->
-    <!-- <ng-container matColumnDef="symbol">
-      <th mat-header-cell *matHeaderCellDef> Number of Votes </th>
-      <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-    </ng-container> -->
-  
-    <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table> -->
-    <!--
-    <p>{{model.kyc_info.name}} </p>
-    <p>{{model.kyc_info.constituency}} </p>
-    <p>{{model.kyc_info.polling_booth}} </p>
-
-    <div *ngFor="let candidate of model.candidates">
-        <p>{{candidate.candidate_name}} </p>
-         <span>{{candidate.party}} </span> <span>{{candidate.age}} </span> 
-    
+    <br />
+    <p class="lhs_text"> Set Security Token (Remember it. This token will be used later to verify your vote) </p>
+    <br />
+    <form  class="example-form">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Set Security Token" type="password" #secto (change)="setSecurityToken($event)">
+        </mat-form-field>
+        <br />
+        <br />
+        <button class="add-button" mat-raised-button color="primary" (click)="vote();">
+          Vote
+        </button>
+      </form>
     </div>
--->
+    <div *ngIf="model.vote_hash">
+    <p class="basic_text"> <span class="lhs_text"> Your Vote Hash : </span> {{model.vote_hash}} </p>
+  </div>
+  <br />
+  <br />
 
-<!-- </div>
-<br>
-<button class="add-button" mat-raised-button color="primary" (click)="kycVerify();"> Verify KYC </button>
-<br> 
-<div >  -->
-<h3> Set Security Token (Remember it. This token will be used later to verify your vote) </h3>
-<form  class="example-form">
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Set Security Token" #secto (change)="setSecurityToken($event)">
-    </mat-form-field>
-    <br />
-    <button class="add-button" mat-raised-button color="primary" (click)="vote();">
-      Vote
-    </button>
-  </form>
-</div>
+  <div>
+   <button class="add-button" mat-raised-button color="primary" (click)="dashboard();">
+          Back to Dashboard
+   </button> 
+  </div>
+  <br />
+  <br />
+  </mat-card-content>
+</mat-card> 

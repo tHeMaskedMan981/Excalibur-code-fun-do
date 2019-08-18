@@ -9,8 +9,10 @@ import {
   transition,
   trigger
 } from "@angular/animations";
+// import { type } from 'os';
 
-const PARTIES = ["BJP","Congress", "BSP"];
+const PARTIES = ["BJP", "Congress", "BSP"];
+const CONSTITUENCIES = ["mumbai"];
 
 const RESULT_DATA = [
   {
@@ -20,9 +22,9 @@ const RESULT_DATA = [
     "Number of Votes": {
       BJP: 2,
       Congress: 1,
-      BSP:0
+      BSP: 0
     },
-    voteHashes: {
+    vote_hashes: {
       BJP: [
         "0xc3eb586d884134a11785f3cae787c62c2202449eac3faf7ad1f7cf019f633d88",
         "0x032900a7e5a67df376e806808ea9a92da5d78105982ab1e61222977c89a9f78e"
@@ -30,8 +32,7 @@ const RESULT_DATA = [
       Congress: [
         "0xc528c2cdb538fe56e760958e8becfea9b49f524d527252b422cded94d749c88b"
       ],
-      BSP: [
-      ]
+      BSP: []
     }
   }
 ];
@@ -52,44 +53,89 @@ const RESULT_DATA = [
   ]
 })
 export class VerifyComponent {
-  columnsToDisplay: string[] = [
-    "No",
-    "Constituency Name",
-    "Winning Party"
-  ];
+  columnsToDisplay: string[] = ["No", "Constituency Name", "Winning Party"];
   dataSource = RESULT_DATA;
   hashes: string[];
-  elec: any;
+  ElectionInstance: any;
   parties = PARTIES;
+  result_data = [];
 
   model = {
     uuid: "",
     voterCount: 34,
-    voteHash: ""
+    vote_hash: ""
   };
   constructor(private web3Service: Web3Service) {}
 
   ngOnInit() {
     this.web3Service
       .artifactsToContract(elec_artifacts)
-      .then(InternCoinAbstraction => {
-        this.elec = InternCoinAbstraction;
-        this.elec.deployed().then(deployed => {
+      .then(ElectionAbstraction => {
+        this.ElectionInstance = ElectionAbstraction;
+        this.ElectionInstance.deployed().then(deployed => {
           console.log(deployed);
+          this.ElectionInstance = deployed;
         });
       });
-    // this.elec.
+
+    // this.getResult();
+    // this.ElectionInstance.
   }
 
   getVoteHash(adhaar: number, password: string) {
     //password = password.trim();
     //  this.hashes
-    this.model.voteHash = web3.utils.keccak256(adhaar.toString() + password);
-    console.log(this.model.voteHash);
+    let votestring =  adhaar.toString() + password;
+    console.log("akash",":","kumar");
+    console.log("string to be hashed :",votestring,":type:", typeof(votestring));
+    this.model.vote_hash = web3.utils.soliditySha3(votestring);
+
+    console.log(this.model.vote_hash);
   }
 
-  getResult() {
-    // this.model.voteHash = web3.utils.keccak256(adhaar.toString() + password);
-    console.log(this.model.voteHash);
+
+  async getResult() {
+    console.log(this.model.vote_hash);
+    let i = 0;
+    let result_object = {
+      No: 0,
+      "Constituency Name": "",
+      "Winning Party": "",
+      "Number of Votes": {},
+      "vote_hashes":{}
+    };
+    for (let j = 0; j < CONSTITUENCIES.length; j++) {
+      let constituency = CONSTITUENCIES[i];
+      console.log(constituency);
+      result_object["No"] = i+1;
+      result_object["Constituency Name"] = constituency;
+      let winning_party = await this.ElectionInstance.getWinner(constituency);
+      result_object["Winning Party"] = winning_party;
+      console.log("result object", result_object);
+      for (let k = 0; k < PARTIES.length; k++) {
+        let party = PARTIES[k];
+        console.log(party);
+        // result_object["Number of Votes"] = {};
+        // result_object["vote_hashes"] = {};
+        console.log("consti ; ", constituency, " party : ", party);
+        let votes = await this.ElectionInstance.getVoteCount(
+          constituency,
+          party
+        );
+        console.log("votes", votes.toString());
+        result_object["Number of Votes"][party] = votes.toString();
+        let vote_hashes = await this.ElectionInstance.getVoteHashes(
+          constituency,
+          party
+        );
+        console.log("vote_hashes", vote_hashes);
+        result_object["vote_hashes"][party] = vote_hashes;
+      }
+
+      this.result_data[i] = result_object;
+      this.dataSource = this.result_data;
+    }
+    console.log("final result object : ", result_object);
+    
   }
 }

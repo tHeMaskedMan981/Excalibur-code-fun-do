@@ -69,7 +69,7 @@ contract VoterData {
         
         Voter memory voter = voters[uuid_hash];
         uint256 dob = voter.dob;
-        uint256 age = (current_timestamp - dob)/(60*60*24*365);
+        uint256 age = (current_timestamp - dob)/(1000*60*60*24*365);
         
         require(age >= 18, "Not Allowed to Vote. Only eligible to vote if age is above 18 years."); 
         voter.voterId = voterId;

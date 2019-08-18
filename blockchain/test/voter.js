@@ -23,6 +23,14 @@ contract("VoterData", accounts => {
   });
 
   describe("success states", async () => {
+    
+    it("should hash correctly", async () => {
+      
+      console.log(web3.utils.sha3("a"));
+      let hash = await VoterDataInstance.hash.call("a");
+      console.log(hash);
+    });
+
     it("should add voter data correctly", async () => {
       
       let dob = new Date(1998, 1, 8); // for the age to be 21 years 

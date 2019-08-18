@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^', include('constituency.urls')),
     url(r'^', include('polling_booth.urls')),
     url(r'^', include('candidate.urls')),
+    url(r'^', include('election.urls')),
 
 ]

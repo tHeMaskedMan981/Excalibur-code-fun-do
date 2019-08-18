@@ -13,7 +13,7 @@
 <mat-card>
   <mat-card-header><span class="span"></span></mat-card-header>
   <br />
-  <button mat-button color="accent" id="requestViewAccess"
+  <button class="add-button" mat-raised-button color="primary" id="requestViewAccess"
                     (click)="getResult()">Refresh</button>
   <br />
   <mat-card-content>
@@ -36,8 +36,8 @@
                 <span class="loan-meta-data"> Number of Votes : {{element['Number of Votes'][party]}} </span>
                 <br /><br /><br />
               <span class="loan-meta-data"> Vote Hashes : </span>  
-              <p *ngFor="let voteHash of element['voteHashes'][party]">
-                <span class="loan-meta-data"> {{voteHash}} </span>
+              <p *ngFor="let vote_hash of element['vote_hashes'][party]">
+                <span class="loan-meta-data"> {{vote_hash}} </span>
               </p>
               
               <br />
@@ -78,8 +78,8 @@
     </button>
   </form>
 
-  <div *ngIf="model.voteHash !=''">
-    <p>Vote Hash : {{model.voteHash}} </p>
+  <div *ngIf="model.vote_hash !=''">
+    <p>Vote Hash : {{model.vote_hash}} </p>
   </div>
   </mat-card-content>
 </mat-card> 

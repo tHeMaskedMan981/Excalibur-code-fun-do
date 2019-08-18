@@ -75,6 +75,10 @@ contract VoterData {
         voters[uuid_hash] = voter;
 
     }
+    function hash(string memory plaintext) public returns (bytes32) {
+
+        return keccak256(abi.encodePacked(plaintext));
+    }
 }
 
 library SafeMath { 

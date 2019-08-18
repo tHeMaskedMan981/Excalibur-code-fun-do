@@ -1,92 +1,4 @@
 <mat-card>
-  <mat-card-header class="header"> Hello {{user.name}} </mat-card-header>
-  
-  <br />
-  <mat-card-header class="header"> Voter details : </mat-card-header>
-  <br />
-  <mat-card-content>
-    <div>
-      <br />
-      <p> <span class="lhs_text">UUID :</span> <span class="basic_text">{{user.uuid}}</span></p>
-      <p> Date of Birth : {{user.dob}} </p>
-      <p> Constituency : {{user.constituency}} </p>
-      <p> Address : {{user.address}} </p>
-
-      <br />
-      <br />
-      <p *ngIf="user.verification_status"> Verification Status : Verified </p>
-      <p *ngIf="!user.verification_status"> Verification Status : Not Verified
-       <span ><button class="add-button" mat-raised-button color="primary" (click)="refreshVerificationStatus()">
-       Refresh </button></span>
-      </p>
-      <p *ngIf="user.verification_status"> Voter ID : {{user.voterId}} 
-        <span *ngIf="!user.is_eligible"> Not eligible to vote. Age should be above 18 years.</span>
-        <span *ngIf="user.voterId=='' && user.is_eligible">
-          <button class="add-button" mat-raised-button color="primary" (click)="getVoterId()">
-          Get Voter ID
-          </button>
-        </span>
-       </p>
-    </div>
-  </mat-card-content>
-</mat-card> 
-
-
-
-
-  <mat-card *ngIf="user.voterId">
-<mat-card-header class="header"> Elections </mat-card-header>
-<br />
-  <mat-card-content>
-    <div *ngFor="let election of elections">
-      <span class="small_header"> {{election.label}} </span>
-      <br />
-      <br />
-      <span> Start Time : {{election.startTime}} </span>
-      <span> End Time : {{election.endTime}} </span> 
-      <br />
-      <br />
-      <span *ngIf="election.status==0"> 
-        Election yet to start. 
-      </span>
-      <span *ngIf="election.status==1"> 
-      <button class="add-button" mat-raised-button color="primary" (click)="vote()">
-          Vote
-          </button>
-      </span>
-      <span *ngIf="election.status==2"> 
-      <button class="add-button" mat-raised-button color="primary" (click)="getResults()">
-          Results
-          </button>
-      </span> 
-      <br />
-      <br />  
-      <br />
-      <br />
-    </div>
-  </mat-card-content>
-</mat-card> 
-
-
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<mat-card>
 <mat-card-header class="header">User Login </mat-card-header>
 <br />
   <mat-card-content>
@@ -101,7 +13,7 @@
       <input matInput placeholder="Password" #pass type="password">
     </mat-form-field>
     <br />
-      <button class="add-button" mat-raised-button color="primary" (click)="verify_user(); otp.value=''">
+      <button class="add-button" mat-raised-button color="primary" (click)="verify_user(an.value, pass.value);">
         Submit
       </button>
   </form>

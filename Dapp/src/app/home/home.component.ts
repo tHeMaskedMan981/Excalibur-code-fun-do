@@ -14,7 +14,11 @@ export class HomeComponent implements OnInit {
     },
     {
       label: 'Login Voter',
-      url: "/user-login"
+      url: "/dashboard"
+    },
+    {
+      label: 'Kyc Verifier Login',
+      url: "/kycverifier"
     },
     {
       label: 'Admin Login',

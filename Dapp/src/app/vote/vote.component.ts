@@ -1,213 +1,218 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
-import { Web3Service } from '../util/web3.service';
-import Web3 from 'web3';
+import { Component, OnInit } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { MatSnackBar } from "@angular/material";
+import { Web3Service } from "../util/web3.service";
+import Web3 from "web3";
+import { Router } from "@angular/router";
 // const Election = artifacts.require("Election");
-import election_artifact from '../../../build/contracts/Election.json';
-// var network_config = {
+import election_artifact from "../../../build/contracts/Election.json";
+// const network_config = {
 //     // httpradar: new http("https://api.radarrelay.com/0x/v2"),
 //     RPC_PROVIDER: "https://mainnet.infura.io/v3/425313c6627e43ddb43324a9419c9508",
 //     NETWORK_ID: 1,
 //     ASSET_URL: "https://api.radarrelay.com/v2/markets/",
 //     ETHERSCAN_TX: "https://etherscan.io/tx/"
 // }
-var network_config = {
-    // httpradar: new http("https://api.radarrelay.com/0x/v2"),
-    RPC_PROVIDER: "http://localhost:8545/",
-    NETWORK_ID: 1
-}
+const network_config = {
+  // httpradar: new http("https://api.radarrelay.com/0x/v2"),
+  RPC_PROVIDER: "http://localhost:8545/",
+  NETWORK_ID: 1
+};
 
 // setting provider to infura
-var web3 = new Web3(new Web3.providers.HttpProvider(network_config.RPC_PROVIDER));
-
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: string;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Ramesh', weight: "BJP", symbol: 'H'},
-  {position: 2, name: 'Suresh', weight: "Congress", symbol: 'He'},
-  {position: 3, name: 'Gaurav', weight: "PJP", symbol: 'Li'},
-  {position: 4, name: 'Mahesh', weight: "AJP", symbol: 'Be'},
-  {position: 5, name: 'Gita', weight: "JNJ", symbol: 'B'},
-  {position: 6, name: 'Chris', weight: "BHP", symbol: 'C'},
-  {position: 7, name: 'Faizan', weight: "BSP", symbol: 'N'}
-];
+const web3 = new Web3(
+  new Web3.providers.HttpProvider(network_config.RPC_PROVIDER)
+);
 
 @Component({
-    selector: 'app-vote',
-    templateUrl: './vote.component.html',
-    styleUrls: ['./vote.component.css']
+  selector: "app-vote",
+  templateUrl: "./vote.component.html",
+  styleUrls: ["./vote.component.css"]
 })
 export class VoteComponent {
+  ElectionInstance: any;
+  // user = { verification_status: false };
+  user : any;
+  model = {
+    uuid: null,
+    constituency: "",
+    candidates: null,
+    show_voting_info: false,
+    selected_party: "",
+    security_token: "",
+    accounts: null,
+    primary_account: null,
+    vote_hash: "",
+    has_voted: false
+  };
 
-    ElectionInstance: any;
+  constructor(
+    private matSnackBar: MatSnackBar,
+    private http: HttpClient,
+    private router: Router,
+    private web3Service: Web3Service
+  ) {}
 
-    model = {
-        uuid: null,
-        kyc_info: {},
-        constituency: '',
-        candidates: null,
-        show_voting_info: false,
-        selected_party: '',
-        security_token: '',
-        accounts: null,
-        primary_account: null
-    }
+  async ngOnInit() {
+    console.log("OnInit: " + this.web3Service);
+    console.log(this);
+    this.watchAccount();
+    this.model.accounts = await web3.eth.getAccounts();
+    console.log(this.model.accounts);
+    this.model.primary_account = this.model.accounts[0];
+    this.model.uuid = this.web3Service.uuid;
+    this.user = { verification_status: false };
+    // this.model.uuid =22;
 
-    constructor(private matSnackBar: MatSnackBar, private http: HttpClient, private web3Service: Web3Service) { }
-
-    async ngOnInit() {
-        console.log('OnInit: ' + this.web3Service);
-        console.log(this);
-        this.watchAccount();
-        this.model.accounts = await web3.eth.getAccounts();
-        console.log(this.model.accounts);
-
-        this.web3Service.artifactsToContract(election_artifact)
-            .then((InternCoinAbstraction) => {
-                this.ElectionInstance = InternCoinAbstraction;
-                this.ElectionInstance.deployed().then(deployed => {
-                    console.log(deployed);
-                    this.ElectionInstance = deployed;
-                });
-
-            });
-            // this.web3Service.uuid = 999999999999;
-        var ec_head = await this.ElectionInstance.methods.EC_Head.call();
-        console.log("ec head : ", ec_head);
-        // var url = "http://localhost:8000/v1/kyc/info/" + this.web3Service.uuid.toString() + "/";
-        // this.http.get(url).subscribe((res) => {
-        //     console.log(res);
-        //     this.model.kyc_info = res;
-        //     this.model.constituency = res["constituency"];
-
-        //     if (this.model.constituency != null) {
-
-        //         var url = "http://localhost:8000/v1/constituency/" + this.model.constituency + "/candidate_list/";
-        //         this.http.get(url).subscribe((res) => {
-        //             console.log(res);
-        //             this.model.candidates = res;
-        //             this.model.show_voting_info = true;
-        //         }, (error) => {
-        //             console.log(error);
-        //         })
-        //     }
-        //     else {
-        //         this.setStatus("Cant fetch voting information correctly. Check after some time")
-        //     }
-        //     // this.setStatus("Your data is suElectionInstanceitted for verification. Come back after some time to check the status")
-        // }, (error) => {
-        //     console.log(error);
-        // })
-    }
-
-    watchAccount() {
-        this.web3Service.accountsObservable.subscribe((accounts) => {
-            this.model.accounts = accounts;
-            this.model.primary_account = accounts[0];
-            console.log(accounts[0])
-            // this.refreshBalance();
+    this.web3Service
+      .artifactsToContract(election_artifact)
+      .then(ElectionAbstraction => {
+        this.ElectionInstance = ElectionAbstraction;
+        this.ElectionInstance.deployed().then(deployed => {
+          console.log(deployed);
+          this.ElectionInstance = deployed;
         });
-    }
+      });
+    console.log("calling get info");
+    this.get_info();
+  }
 
-    get_info() {
+  watchAccount() {
+    this.web3Service.accountsObservable.subscribe(accounts => {
+      this.model.accounts = accounts;
+      this.model.primary_account = accounts[0];
+      console.log(accounts[0]);
+      // this.refreshBalance();
+    });
+  }
 
-        var url = "/v1/kyc/info/" + this.model.uuid.toString() + "/";
-        this.http.get(url).subscribe((res) => {
-            console.log(res);
-            this.model.kyc_info = res;
-            this.model.constituency = res["constituency"];
+  get_info() {
+    let url = "/v1/kyc/info/" + this.model.uuid.toString() + "/";
+    console.log("inside get info ", url);
+    this.http.get(url).subscribe(
+      res => {
+        console.log(res);
+        this.user = res;
+        // let has_voted = this.check_has_voted();
+        // if (has_voted){
+        //     return;
+        // }
+        this.model.constituency = res["constituency"];
 
-            if (this.model.constituency != null) {
-
-                var url = "/v1/constituency/" + this.model.constituency + "/candidate_list/";
-                this.http.get(url).subscribe((res) => {
-                    console.log(res);
-                    this.model.candidates = res;
-                    this.model.show_voting_info = true;
-
-                }, (error) => {
-                    console.log(error);
-                })
+        if (this.model.constituency != null) {
+          let url =
+            "/v1/constituency/" + this.model.constituency + "/candidate_list/";
+          this.http.get(url).subscribe(
+            res => {
+              console.log(res);
+              this.model.candidates = res;
+              this.model.show_voting_info = true;
+            },
+            error => {
+              console.log(error);
             }
-            else {
-                this.setStatus("Cant fetch voting information correctly. Check after some time")
-            }
-            // this.setStatus("Your data is suElectionInstanceitted for verification. Come back after some time to check the status")
-        }, (error) => {
-            console.log(error);
-        })
-    }
+          );
+        } else {
+          this.setStatus(
+            "Cant fetch voting information correctly. Check after some time"
+          );
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
 
-    async vote() {
-        var vote_hash = web3.utils.keccak256(this.web3Service.uuid.toString() + this.model.security_token);
-        console.log(vote_hash);
-        var uuid_hash = web3.utils.keccak256(this.web3Service.uuid.toString());
-        console.log(uuid_hash);
+  async vote() {
+    let vote_hash = web3.utils.soliditySha3(
+      this.model.uuid.toString() + this.model.security_token
+    );
+    console.log(vote_hash);
+    this.model.vote_hash = vote_hash;
+    let voter_id_hash = web3.utils.soliditySha3(this.user["voter_id"]);
+    console.log(voter_id_hash);
+    console.log(
+      voter_id_hash,
+      " ; ",
+      this.model.constituency,
+      " : ",
+      this.model.selected_party,
+      " : ",
+      vote_hash
+    );
+    
+    const nonce = await this.web3Service.getNonce(this.model.primary_account);
+    console.log("Got nonce: ", nonce);
 
-        var tx_hash = await this.ElectionInstance.registerVote(uuid_hash, this.model.constituency, this.model.selected_party, vote_hash, { from: this.model.accounts[0] })
-            .on('receipt', (receipt) => {
-                console.log('block mined');
-                console.log(receipt);
-                this.model.show_voting_info = false;
-                this.setStatus("Vote Confirmed! You can view the transaction on etherscan");
-            });
+    this.ElectionInstance.registerVote
+      .sendTransaction(voter_id_hash,
+        this.model.constituency,
+        this.model.selected_party,
+        vote_hash, {
+        from: this.model.primary_account,
+        nonce: nonce
+      })
+      .then((res, err) => {
+        if (err !== undefined) {
+          console.error(err);
+        } else {
+          console.log(res.receipt.status);
+          if (res.receipt.status === true) {
+            console.log("block mined");
+            console.log(res.receipt);
+            this.model.show_voting_info = false;
+            this.setStatus(
+                "Vote Confirmed! You can view the transaction on etherscan"
+            );
+          }
+        }
+      });
 
-        console.log(tx_hash);
-    }
+    // let tx_hash = await this.ElectionInstance.registerVote(
+    //   voter_id_hash,
+    //   this.model.constituency,
+    //   this.model.selected_party,
+    //   vote_hash,
+    //   { from: this.model.accounts[0] }
+    // ).on("receipt", receipt => {
+    //   console.log("block mined");
+    //   console.log(receipt);
+    //   this.model.show_voting_info = false;
+    //   this.setStatus(
+    //     "Vote Confirmed! You can view the transaction on etherscan"
+    //   );
+    // });
 
-    // async kycVerify() {
+    // console.log(tx_hash);
+  }
 
-    //     var uuid_hash = web3.utils.keccak256(this.model.uuid.toString());
-    //     console.log(uuid_hash);
+  setStatus(status) {
+    this.matSnackBar.open(status, null, { duration: 3000 });
+  }
 
-    //     var tx_hash = await this.ElectionInstance.kycVerify(uuid_hash, { from: this.model.accounts[0] })
-    //         .on('receipt', (receipt) => {
-    //             console.log('verification done');
-    //             console.log(receipt);
-    //         });
+  setUuid(e) {
+    this.model.uuid = e.target.value;
+  }
 
-    //     console.log(tx_hash);
-    // }
+  setSelectedCandidate(e) {
+    this.model.selected_party = e.value;
+    console.log(this.model.selected_party);
+  }
 
-    setStatus(status) {
-        this.matSnackBar.open(status, null, { duration: 3000 });
-    }
+  setSecurityToken(e) {
+    this.model.security_token = e.target.value;
+    console.log(this.model.security_token);
+  }
+  async check_has_voted() {
+    let voter_id_hash = web3.utils.soliditySha3(this.user["voter_id"]);
+    let has_voted = await this.ElectionInstance.hasVoted.call(voter_id_hash);
+    console.log("has voted : ", has_voted);
+    this.model.has_voted = has_voted;
+    return has_voted;
+  }
 
-    setUuid(e) {
-        this.model.uuid = e.target.value;
-    }
-    setSelectedCandidate(e) {
-        this.model.selected_party = e.value;
-        console.log(this.model.selected_party)
-    }
-
-    setSecurityToken(e) {
-        this.model.security_token = e.target.value;
-        console.log(this.model.security_token)
-    }
-
-
-
-
+  dashboard() {
+    this.router.navigateByUrl("/dashboard");
+  }
 }
-
-// /**
-//  * @title Basic use of `<table mat-table>`
-//  */
-// @Component({
-//   selector: 'table-basic-example',
-//   styleUrls: ['table-basic-example.css'],
-//   templateUrl: 'table-basic-example.html',
-// })
-// export class TableBasicExample {
-//   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-//   dataSource = ELEMENT_DATA;
-// }
-

@@ -6,7 +6,6 @@ pragma experimental ABIEncoderV2;
 contract Election {
  
     address public EC_Head;
-    mapping(address => bool) public kyc_verifiers;
     mapping(address => bool) public ec_officials;
 
     // event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
@@ -16,11 +15,10 @@ contract Election {
     string[] public parties;
     // mapping(uint8 => string) public partyName;
     mapping(bytes32 => bool) public hasVoted;
-    mapping(bytes32 => bool) public kycDone;
-    // mapping(uint => bool) public kycDone;
+    
     uint public voterCount;
-    mapping(string => mapping (string => bytes32[]))  vote_hashes;
-    mapping(string => mapping (string => uint))  result;
+    mapping(string => mapping (string => bytes32[])) public vote_hashes;
+    mapping(string => mapping (string => uint)) public result;
     mapping(string => string)  winner;
 
     // Vault opens/opened at this time
@@ -29,12 +27,7 @@ contract Election {
     // Vault closes/Closed at this times
     uint256 public endTime;
     
-    // flag to track whether vault closed permanently or not
-    bool public vaultSealed;
-    
-    // Checks whether the vault is opened or not
-    bool public isVaultOpened;
-
+   
 
     using SafeMath for uint;
     
@@ -46,21 +39,13 @@ contract Election {
         require((ec_officials[msg.sender]), "You are not Authorized to make this function Call.");
         _;
     }
-    modifier onlyKycVerifier {
-        require((kyc_verifiers[msg.sender]), "You are not Authorized to make this function Call.");
-        _;
-    }
+
 
    constructor() public {  
 	
     EC_Head = msg.sender;
     ec_officials[msg.sender] = true;
-    // will remove this when actual voting occurs
-    kyc_verifiers[msg.sender] = true;
     voterCount = 0;
-
-    vaultSealed = false;
-    isVaultOpened = false;
     }  
 
     function addEcOfficial (address official) public onlyEcHead {
@@ -70,13 +55,7 @@ contract Election {
         ec_officials[official] = false;
         delete ec_officials[official];
     }
-    function addKycVerifier (address verifier) public onlyEcOfficial {
-        kyc_verifiers[verifier] = true;
-    }
-    function removeKycVerifier(address verifier) public onlyEcOfficial {
-        kyc_verifiers[verifier] = false;
-        delete kyc_verifiers[verifier];
-    }
+
     function addParty (string memory party_name) public onlyEcOfficial {
         // require(!isVaultOpened);
         // require(beginTime >= uint256(now), "Cannot add a party after the elections have started.");
@@ -88,16 +67,11 @@ contract Election {
         constituencies.push(constituency);
     }
 
-    function kycVerify(bytes32  uuid_hash) public onlyKycVerifier {
-        kycDone[uuid_hash] = true;
-    }
-
     function registerVote(bytes32 uuid_hash, string memory constituency, string memory party,  bytes32 vote_hash) public {
         // require(!vaultSealed);
         // require(isVaultOpened);
         // require(beginTime <= uint256(now), "The elections haven't started yet"); 
         // require(endTime >= uint256(now), "The election period is over");
-        require(kycDone[uuid_hash], "KYC process is not complete for this voter");
         require(!(hasVoted[uuid_hash]), "The voter has already voted. Aborting.");
 
         vote_hashes[constituency][party].push(vote_hash);

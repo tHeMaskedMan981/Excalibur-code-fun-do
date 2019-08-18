@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import KycInfo
+from .models import Election
 # Register your models here.
 
-admin.site.register(KycInfo)
+admin.site.register(Election)

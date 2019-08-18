@@ -14,6 +14,13 @@ export class Web3Service {
     private accounts: string[];
     public ready = false;
     public uuid: number;
+    public election_status = 0;
+    public election = {
+          label: "Test Election",
+          start_time: "April 21, 2019",
+          end_time: "May 21, 2019",
+          status: 0 // 0 - yet to start, 1- ongoing, 2 - completed
+        };
 
     public accountsObservable = new Subject<string[]>();
 
