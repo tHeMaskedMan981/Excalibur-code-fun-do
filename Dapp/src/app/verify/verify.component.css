@@ -40,7 +40,7 @@ table {
   }
   
   tr.example-element-row:not(.example-expanded-row):hover {
-    background: #777;
+    background: #999;
   }
   
   tr.example-element-row:not(.example-expanded-row):active {
@@ -84,4 +84,27 @@ table {
   
   .example-element-description-attribution {
     opacity: 0.5;
+  }
+
+  .card {
+    background: rgba(255,255,255, 0.6);
+   
+  }
+
+  .refresh-button{
+    background: rgba(30, 30, 30, 0.9);
+  }
+
+  .verify-button{
+    background: rgba(30, 30, 30, 0.9);
+  }
+
+  th {
+    font-size: 11pt;
+    text-align: center;
+    background-color: rgb(190,190,190);
+  }
+
+  td {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   }

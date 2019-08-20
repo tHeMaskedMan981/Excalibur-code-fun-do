@@ -16,7 +16,7 @@ const CONSTITUENCIES = ["mumbai"];
 
 const RESULT_DATA = [
   {
-    No: 1,
+    "Sr. No.": 1,
     "Constituency Name": "Bangalore",
     "Winning Party": "BJP",
     "Number of Votes": {
@@ -53,7 +53,7 @@ const RESULT_DATA = [
   ]
 })
 export class VerifyComponent {
-  columnsToDisplay: string[] = ["No", "Constituency Name", "Winning Party"];
+  columnsToDisplay: string[] = ["Sr. No.", "Constituency Name", "Winning Party"];
   dataSource = RESULT_DATA;
   hashes: string[];
   ElectionInstance: any;

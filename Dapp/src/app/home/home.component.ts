@@ -9,15 +9,15 @@ export class HomeComponent implements OnInit {
 
   links = [
     {
-      label: 'Register Voter',
+      label: 'Voter Registration',
       url: "/kyc"
     },
     {
-      label: 'Login Voter',
+      label: 'Voter Login',
       url: "/dashboard"
     },
     {
-      label: 'Kyc Verifier Login',
+      label: 'KYC Verifier Login',
       url: "/kycverifier"
     },
     {

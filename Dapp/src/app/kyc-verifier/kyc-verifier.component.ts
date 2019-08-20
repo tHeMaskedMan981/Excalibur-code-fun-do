@@ -25,8 +25,9 @@ const web3 = new Web3(
 export class KycVerifierComponent implements OnInit {
   VoterDataInstance: any;
 
+  // Dummy verifier (in actual practice, login mechanism would be used)
   verifier = {
-    name: "Tezan"
+    name: "Amit Singh"
   };
 
   // unverifiedVoters = UNVERIFIED_VOTERS;
@@ -100,29 +101,35 @@ export class KycVerifierComponent implements OnInit {
     let current_time = new Date().getTime();
     let uuidHash = web3.utils.soliditySha3(voter.uuid);
     
-    // Get the nonce & post data to the blockchain
-    const nonce  = await this.web3Service.getNonce(this.model.primary_account);
-    console.log("Got nonce: ", nonce);
-    console.log("account from : ", this.model.primary_account);
-    this.VoterDataInstance.kycVerify.sendTransaction(uuidHash, voter.name, voter_dob, current_time, {from: this.model.primary_account, nonce: nonce})
-      .then((res, err) => {
-        if(err !== undefined){
-          console.error(err);
-          // voter.verification_status = "unverified";
-        }
-        else{
-          console.log(res.receipt.status);
-          if(res.receipt.status == true){
-            console.log("receipt : ", res.receipt);
-            this.updateVerificationStatusDB(voter.name, voter.uuid);
+    try{
+      // Get the nonce & post data to the blockchain
+      const nonce  = await this.web3Service.getNonce(this.model.primary_account);
+      console.log("Got nonce: ", nonce);
+      console.log("account from : ", this.model.primary_account);
+      this.VoterDataInstance.kycVerify.sendTransaction(uuidHash, voter.name, voter_dob, current_time, {from: this.model.primary_account, nonce: nonce})
+        .then((res, err) => {
+          if(err !== undefined){
+            console.error("Error!!!!", err);
+            // voter.verification_status = "unverified";
           }
           else{
-            console.log("transaction failed. check receipt : ", res.receipt);
+            console.log(res.receipt.status);
+            if(res.receipt.status == true){
+              console.log("receipt : ", res.receipt);
+              this.updateVerificationStatusDB(voter.name, voter.uuid);
+            }
+            else{
+              console.log("transaction failed. check receipt : ", res.receipt);
+
+            }
 
           }
-
         }
-    });
+      );
+    }
+    catch(err){
+      console.log("Error!!", err);
+    }
 
     // this.updateVerificationStatusDB(voter.name, voter.uuid);
   }

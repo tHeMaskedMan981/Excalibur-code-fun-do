@@ -3,6 +3,7 @@ import { EmailValidator } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
 import { MatSnackBar } from "@angular/material";
 
+
 @Component({
   selector: "app-kyc",
   templateUrl: "./kyc.component.html",
