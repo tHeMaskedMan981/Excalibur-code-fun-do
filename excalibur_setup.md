@@ -1,5 +1,5 @@
-<h1 style="text-align:center">Excalibur</h1>
-<p align="center">:computer::closed_lock_with_key::scroll:</p>
+<h1 align="center">Excalibur</h1>
+<p align="center">:computer: :closed_lock_with_key: :scroll:</p>
 
 ***
 
