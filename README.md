@@ -1,5 +1,9 @@
 # Excalibur [codefundo++]
 
+***
+#### To set up the project, follow the steps mentioned [here](excalibur_setup.md)
+
+***
 ## Proposed Solution
 
 #### Phase 0 [Groundwork]:
@@ -36,7 +40,7 @@
 - Faster result declaration: Results will be available within a few hours of the end of the voting phase.
 
 ##### Tech-Stack to be Used:
-- Ethereum (for blockchain & smart contracts)
+- Quorum (for blockchain & smart contracts)
 - Microsoft Azure (for deployment)
 - Angular (for front-end)
 - Django (for back-end) 

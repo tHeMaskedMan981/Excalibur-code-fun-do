@@ -75,11 +75,11 @@ mat-form-field {
     padding: 16px;
   }
 
-  .header {
+  /* .header {
     font-weight: bold;
     font-size: 20px;
     line-height: normal;
-  }
+  } */
   
   .loan-meta-data {
     margin: 56px;
