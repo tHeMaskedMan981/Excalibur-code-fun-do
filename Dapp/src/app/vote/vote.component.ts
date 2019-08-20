@@ -215,4 +215,8 @@ export class VoteComponent {
   dashboard() {
     this.router.navigateByUrl("/dashboard");
   }
+
+  home() {
+    this.router.navigateByUrl('/home');
+  }
 }

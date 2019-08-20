@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { EmailValidator } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
 import { MatSnackBar } from "@angular/material";
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -20,7 +21,7 @@ export class KycComponent implements OnInit {
   dob:Date;
   constituencies: any;
 
-  constructor(private matSnackBar: MatSnackBar, private http: HttpClient) {}
+  constructor(private matSnackBar: MatSnackBar, private router: Router, private http: HttpClient) {}
 
   ngOnInit() {
     this.getConstituencyList();
@@ -57,6 +58,7 @@ export class KycComponent implements OnInit {
       this.setStatus(
         "Your data is submitted for verification. Come back after some time to check the status"
       );
+      this.router.navigateByUrl("/dashboard");
     });
   }
 
@@ -106,4 +108,8 @@ export class KycComponent implements OnInit {
       this.constituencies = res;
     });
   }
+
+  home() {
+    this.router.navigateByUrl('/home');
+}
 }

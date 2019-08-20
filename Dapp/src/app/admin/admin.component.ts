@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { MatSnackBar } from "@angular/material";
 import { Web3Service } from "../util/web3.service";
+import { Router } from '@angular/router';
 import Web3 from "web3";
 
 import election_artifact from "../../../build/contracts/Election.json";
@@ -36,7 +37,8 @@ export class AdminComponent implements OnInit {
   constructor(
     private matSnackBar: MatSnackBar,
     private http: HttpClient,
-    private web3Service: Web3Service
+    private web3Service: Web3Service,
+    private router: Router
   ) {}
 
   async ngOnInit() {
@@ -117,6 +119,10 @@ export class AdminComponent implements OnInit {
       }
     );
   }
+
+  home() {
+    this.router.navigateByUrl('/home');
+}
 }
 
 

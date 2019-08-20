@@ -120,7 +120,7 @@ export class DashboardComponent implements OnInit {
 
   setEligible() {
     let dob = this.user.dob;
-    let age = (Date.now() - dob) / (60 * 60 * 24 * 365);
+    let age = (Date.now() - dob) / (1000 * 60 * 60 * 24 * 365);
     this.user["is_eligible"] = age >= 18 ? true : false;
     console.log(this.user);
     console.log(this.user.voter_id == null);
@@ -168,7 +168,8 @@ export class DashboardComponent implements OnInit {
 
   vote() {
     this.setStatusShort("Redirecting to Voting Page ...");
-    this.router.navigateByUrl("/vote");
+    // this.router.navigateByUrl("/vote");
+    this.router.navigateByUrl('/otp_verification');
   }
 
   getResults() {
@@ -223,11 +224,15 @@ export class DashboardComponent implements OnInit {
     this.http.get(url).subscribe(
       res => {
         console.log(res);
-        this.elections =res;
+        this.elections = res;
       },
       error => {
         console.log(error);
       }
     );
   }
+
+  home() {
+    this.router.navigateByUrl('/home');
+}
 }

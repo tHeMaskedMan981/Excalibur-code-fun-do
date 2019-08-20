@@ -2,19 +2,6 @@ table {
     width: 100%;
   }
 
-  .card {
-    background: rgba(255,255,255, 0.6);
-   
-  }
-
-  .refresh-button{
-    background: rgba(30, 30, 30, 0.9);
-  }
-
-  .verify-button{
-    background: rgba(30, 30, 30, 0.9);
-  }
-
   th {
     font-size: 11pt;
     text-align: center;
@@ -23,4 +10,9 @@ table {
 
   td {
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  }
+
+  .add-button, .submit-button, .election-button, .refresh-button, .verify-button{
+    background: rgba(30, 30, 30, 0.9);
+    font-family:Impact;
   }

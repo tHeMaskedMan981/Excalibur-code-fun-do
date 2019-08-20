@@ -1,5 +1,5 @@
 <mat-card *ngIf="!this.model.uuid" class="card">
-<mat-card-header class="header">User Login </mat-card-header>
+<mat-card-header class="header"><span>Voter Login</span> <span style="margin-left:auto"><button class="home_button" mat-raised-button (click)="home()">Home</button></span> </mat-card-header>
 <br />
   <mat-card-content>
   <div>
@@ -14,7 +14,7 @@
     </mat-form-field>
     <br />
       <button class="add-button" mat-raised-button color="primary" (click)="login(an.value, pass.value);">
-        Submit
+        <b>Submit</b>
       </button>
   </form>
 <!-- (click) passes input value to add() and then clears the input -->
@@ -27,7 +27,7 @@
 
 
 
-<mat-card *ngIf="this.model.uuid">
+<mat-card *ngIf="this.model.uuid" class="card">
   <mat-card-header class="header"> Hello {{user.name}} </mat-card-header>
   
   <br />
@@ -44,37 +44,37 @@
       <br />
       <br />
       <p *ngIf="user.verification_status"> <span class="lhs_text"> Verification Status:</span> <span class="basic_text"> Verified </span></p>
-      <p *ngIf="!user.verification_status"> <span class="lhs_text"> Verification Status:</span> <span class="basic_text"> Not Verified</span>
+      <p *ngIf="!user.verification_status"> <span class="lhs_text"> Verification Status:</span> <span class="basic_text"> Not Verified &#9;&#9; </span>
        <span ><button class="add-button" mat-raised-button color="primary" (click)="refreshVerificationStatus()">
-       Refresh </button></span>
+       <b>Refresh</b> </button></span>
       </p>
       <p *ngIf="user.verification_status"> <span class="lhs_text"> Voter ID: </span> <span class="basic_text"> {{user.voter_id}}</span> 
         <span *ngIf="!user.is_eligible"> Not eligible to vote. Age should be above 18 years.</span>
         <span *ngIf="user.voter_id==null && user.is_eligible">
           <button class="add-button" mat-raised-button color="primary" (click)="getVoterId()">
-          Get Voter ID
+          <b>Get Voter ID</b>
           </button>
         </span>
        </p>
        <br />
        <br />
        <span ><button class="add-button" mat-raised-button color="primary" (click)="logout()">
-       Logout </button></span>
+       <b>Logout</b> </button></span>
        <br />
        <br />
     </div>
   </mat-card-content>
 </mat-card> 
 
+<br>
 
 
-
-<mat-card *ngIf="this.model.uuid && user.voter_id">
+<mat-card *ngIf="this.model.uuid && user.voter_id" class="card">
 <mat-card-header class="header"> Elections </mat-card-header>
 <br />
   <mat-card-content>
   <button class="add-button" mat-raised-button color="primary" (click)="refreshElections()">
-          Refresh
+          <b>Refresh</b>
   </button>
   <br />
   <br />
@@ -99,12 +99,12 @@
       </span>
       <span *ngIf="election.status==1"> 
       <button class="add-button" mat-raised-button color="primary" (click)="vote()">
-          Vote
+          <b>Vote</b>
           </button>
       </span>
       <span *ngIf="election.status==2"> 
       <button class="add-button" mat-raised-button color="primary" (click)="getResults()">
-          Results
+          <b>Results</b>
           </button>
       </span>
         </td>
@@ -117,9 +117,9 @@
   </mat-card-content>
 </mat-card> 
 
+<br>
 
-
-<mat-card *ngIf="this.model.uuid && user.voter_id && false">
+<mat-card *ngIf="this.model.uuid && user.voter_id && false" class="card">
   <mat-card-header class="header"> Elections </mat-card-header>
   <br />
   <mat-card-content>
@@ -136,12 +136,12 @@
       </span>
       <span *ngIf="election.status==1"> 
       <button class="add-button" mat-raised-button color="primary" (click)="vote()">
-          Vote
+          <b>Vote</b>
           </button>
       </span>
       <span *ngIf="election.status==2"> 
       <button class="add-button" mat-raised-button color="primary" (click)="getResults()">
-          Results
+          <b>Results</b>
           </button>
       </span> 
       <br />

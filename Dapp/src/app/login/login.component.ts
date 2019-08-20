@@ -71,8 +71,13 @@ export class LoginComponent implements OnInit {
         }, (error) => {
             console.log(error);
             this.setStatusShort("Cannot Verify OTP. please try again after some time ")
-        })
+        });
     }
+
+    home() {
+        this.router.navigateByUrl('/home');
+    }
+
     setStatus(status) {
         this.matSnackBar.open(status, null, { duration: 3000 });
         if(status == "OTP Verified") {

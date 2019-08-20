@@ -7,7 +7,7 @@
     /* background-color: #673ab7; */
     background-color: rgba(30, 30, 30, 0.8);
     color: antiquewhite;
-    font-size: 20px;
+    font-size: 30px;
     line-height: normal;
     font-family:Impact;
     padding:10px;
@@ -55,6 +55,24 @@
       color: white;
       border-radius: 5px;
   }
+
+  .home_button {
+    background-color:white;
+    padding: 0px;
+    font-size: 18px;
+    font-family:Impact;
+  }
+
+  .card {
+    background: rgba(255,255,255, 0.6);
+   
+  }
+
+  .add-button, .submit-button, .election-button, .refresh-button, .verify-button{
+    background: rgba(30, 30, 30, 0.9);
+    font-family:Impact;
+  }
+
   /* span {
       margin:10px;
       font-size: 16px;

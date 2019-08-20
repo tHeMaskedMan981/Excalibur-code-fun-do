@@ -17,11 +17,11 @@ export class HomeComponent implements OnInit {
       url: "/dashboard"
     },
     {
-      label: 'KYC Verifier Login',
+      label: 'KYC Verifier Portal',
       url: "/kycverifier"
     },
     {
-      label: 'Admin Login',
+      label: 'Admin Portal',
       url: "/admin",
     }
   ];

@@ -14,7 +14,7 @@ import { KycVerifierComponent } from './kyc-verifier/kyc-verifier.component';
 const routes: Routes = [
   { path: 'kyc', component: KycComponent },
   { path: 'kycverifier', component: KycVerifierComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'otp_verification', component: LoginComponent },
   { path: 'user-login', component: UserLoginComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'vote', component: VoteComponent },

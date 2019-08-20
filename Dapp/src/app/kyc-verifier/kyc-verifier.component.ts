@@ -110,6 +110,7 @@ export class KycVerifierComponent implements OnInit {
         .then((res, err) => {
           if(err !== undefined){
             console.error("Error!!!!", err);
+            this.setStatus("Error: Unable to verify! Please try again later");
             // voter.verification_status = "unverified";
           }
           else{
@@ -120,6 +121,7 @@ export class KycVerifierComponent implements OnInit {
             }
             else{
               console.log("transaction failed. check receipt : ", res.receipt);
+              this.setStatus("Error: Unable to verify! Please try again later");
 
             }
 
@@ -129,6 +131,7 @@ export class KycVerifierComponent implements OnInit {
     }
     catch(err){
       console.log("Error!!", err);
+      this.setStatus("Error: Unable to verify! Please try again later");
     }
 
     // this.updateVerificationStatusDB(voter.name, voter.uuid);
@@ -162,5 +165,9 @@ export class KycVerifierComponent implements OnInit {
       console.log(res);
       this.unverifiedVoters = res;
     });
+  }
+
+  home() {
+    this.router.navigateByUrl('/home');
   }
 }

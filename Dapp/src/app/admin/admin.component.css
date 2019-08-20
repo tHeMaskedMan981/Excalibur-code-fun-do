@@ -3,17 +3,10 @@ add-button {
     margin-left: 40%;
 }
 
-.card {
-    background: rgba(255,255,255, 0.6);
-}
-
-.election-button{
+.add-button, .submit-button, .election-button, .refresh-button, .verify-button{
     background: rgba(30, 30, 30, 0.9);
-}
-
-.refresh-button{
-    background: rgba(30, 30, 30, 0.9);
-}
+    font-family:Impact;
+  }
 
 th {
     font-size: 11pt;
@@ -23,4 +16,5 @@ th {
 
 td {
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    
 }

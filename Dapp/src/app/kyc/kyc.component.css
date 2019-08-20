@@ -100,14 +100,9 @@ mat-form-field {
     width: 100%;
   }
 
-  .card {
-    background: rgba(255,255,255, 0.6);
-   
-  }
-
-  .add-button{
+  .add-button, .submit-button, .election-button, .refresh-button, .verify-button{
     background: rgba(30, 30, 30, 0.9);
-    
+    font-family:Impact;
   }
   
   

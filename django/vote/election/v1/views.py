@@ -14,7 +14,7 @@ class ElectionList(APIView):
     """
     def get(self, request):
 
-        elections = Election.objects.filter(pk=1)
+        elections = Election.objects.all()
         serializer = serializers.ElectionSerializer(elections, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

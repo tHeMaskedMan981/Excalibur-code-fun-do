@@ -1,5 +1,5 @@
-<mat-card>
-  <mat-card-header class="header"> Voting Page </mat-card-header>
+<mat-card class="card">
+  <mat-card-header class="header"><span>Voting Page</span> <span style="margin-left:auto"><button class="home_button" mat-raised-button (click)="home()">Home</button></span></mat-card-header>
   
   <br />
   <br />
@@ -14,7 +14,7 @@
   </div>
     <div *ngIf=(model.show_voting_info)>
 
-      <mat-select name="candidates" (selectionChange)="setSelectedCandidate($event)" placeholder="Select Candidate">
+      <mat-select style="margin-left: 10pt;" name="candidates" (selectionChange)="setSelectedCandidate($event)" placeholder="Select Candidate">
           <mat-option *ngFor="let candidate of model.candidates" [value]="candidate.party">
                     {{candidate.candidate_name}}  |  {{candidate.party}}  |  {{candidate.age}}
                 </mat-option>
@@ -25,13 +25,13 @@
     <p class="lhs_text"> Set Security Token (Remember it. This token will be used later to verify your vote) </p>
     <br />
     <form  class="example-form">
-        <mat-form-field class="example-full-width">
+        <mat-form-field class="example-full-width" style="margin-left: 10pt;">
           <input matInput placeholder="Set Security Token" type="password" #secto (change)="setSecurityToken($event)">
         </mat-form-field>
         <br />
         <br />
         <button class="add-button" mat-raised-button color="primary" (click)="vote();">
-          Vote
+          <b>Vote</b>
         </button>
       </form>
     </div>
@@ -43,7 +43,7 @@
 
   <div>
    <button class="add-button" mat-raised-button color="primary" (click)="dashboard();">
-          Back to Dashboard
+          <b>Back to Dashboard</b>
    </button> 
   </div>
   <br />

@@ -1,11 +1,11 @@
 <mat-card class="card">
-  <mat-card-header class="header"> Hello {{verifier.name}}!</mat-card-header> 
+  <!--<mat-card-header class="header"> Hello {{verifier.name}}!</mat-card-header> 
   
-  <br />
-  <mat-card-header class="header"> Unverified Voters: </mat-card-header>
+  <br />-->
+  <mat-card-header class="header"> <span>Unverified Voters</span> <span style="margin-left:auto"><button class="home_button" mat-raised-button (click)="home()">Home</button></span> </mat-card-header>
   <br />
   <span ><button class="refresh-button" mat-raised-button color="primary" (click)="getVoterList()">
-       Refresh </button></span>
+       <b>Refresh</b> </button></span>
   <br />
   <br>
   <mat-card-content>
@@ -34,7 +34,7 @@
         <th mat-header-cell *matHeaderCellDef> <b>KYC Status</b> </th>
         <td mat-cell *matCellDef="let element">
           <button *ngIf="!element.verification_status" class="verify-button" mat-raised-button color="primary" (click)="verify(element)">
-            Verify
+            <b>Verify</b>
           </button>
           <span *ngIf = "element.verification_status">Verified!</span>
         </td>
