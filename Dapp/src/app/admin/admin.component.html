@@ -1,5 +1,5 @@
 <mat-card class="card">
-<mat-card-header class="header"> <span>Elections</span> <span style="margin-left:auto"><button class="home_button" mat-raised-button (click)="home()">Home</button></span></mat-card-header>
+<mat-card-header class="header"> <span>Admin Portal</span> <span style="margin-left:auto"><button class="home_button" mat-raised-button (click)="home()">Home</button></span></mat-card-header>
 <br />
   <mat-card-content>
   <button class="refresh-button" mat-raised-button color="primary" (click)="refreshElections()">
@@ -10,7 +10,7 @@
   <br />
   <table mat-table [dataSource] = "elections" class="mat-elevation-z8">
       <ng-container matColumnDef="Label">
-        <th mat-header-cell *matHeaderCellDef> <b>Label</b> </th>
+        <th mat-header-cell *matHeaderCellDef> <b>Election</b> </th>
         <td mat-cell *matCellDef="let election" > {{election.label}} </td>
       </ng-container>
       <ng-container matColumnDef="Start Time">

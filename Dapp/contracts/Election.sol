@@ -67,10 +67,14 @@ contract Election {
         constituencies.push(constituency);
     }
 
+    function getConstituencies() public view returns(string[] memory){
+        return constituencies;
+    }
+
     function registerVote(bytes32 uuid_hash, string memory constituency, string memory party,  bytes32 vote_hash) public {
         // require(!vaultSealed);
         // require(isVaultOpened);
-        // require(beginTime <= uint256(now), "The elections haven't started yet"); 
+        // require(beginTime <= uint256(now), "The elections haven't started yet");
         // require(endTime >= uint256(now), "The election period is over");
         require(!(hasVoted[uuid_hash]), "The voter has already voted. Aborting.");
 
@@ -105,6 +109,20 @@ contract Election {
     }
     function getVoteCount(string memory constituency, string memory party) public view returns (uint) {
         return  result[constituency][party];
+    }
+
+    function resetElection() public onlyEcHead returns(bool){
+        for (uint i = 0; i < constituencies.length; i++)
+        {
+            for (uint j = 0; j < parties.length; j++){
+                 result[constituencies[i]][parties[j]] = 0;
+                 vote_hashes[constituencies[i]][parties[j]].length = 0;
+
+            }
+             winner[constituencies[i]] = "";
+        }
+        voterCount = 0;
+        return true;
     }
 }
 

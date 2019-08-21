@@ -28,14 +28,13 @@
 
 
 <mat-card *ngIf="this.model.uuid" class="card">
-  <mat-card-header class="header"> Hello {{user.name}} </mat-card-header>
+  <mat-card-header class="header"> <span>Hello {{user.name}}</span> <span style="margin-left:auto"><button class="home_button" mat-raised-button (click)="home()">Home</button></span> </mat-card-header>
   
   <br />
-  <mat-card-header class="header"> Voter details : </mat-card-header>
+  <mat-card-header class="small_header"> Voter details : </mat-card-header>
   <br />
   <mat-card-content>
     <div>
-      <br />
       <p> <span class="lhs_text">UUID:</span> <span class="basic_text"> {{user.uuid}}</span></p>
       <p> <span class="lhs_text"> Date of Birth:</span> <span class="basic_text"> {{user.dob_string}}</span> </p>
       <p> <span class="lhs_text"> Constituency:</span> <span class="basic_text"> {{user.constituency}}</span> </p>
@@ -103,7 +102,7 @@
           </button>
       </span>
       <span *ngIf="election.status==2"> 
-      <button class="add-button" mat-raised-button color="primary" (click)="getResults()">
+      <button class="add-button" mat-raised-button color="primary" (click)="getResults(election.label)">
           <b>Results</b>
           </button>
       </span>
@@ -119,7 +118,7 @@
 
 <br>
 
-<mat-card *ngIf="this.model.uuid && user.voter_id && false" class="card">
+<!--<mat-card *ngIf="this.model.uuid && user.voter_id && false" class="card">
   <mat-card-header class="header"> Elections </mat-card-header>
   <br />
   <mat-card-content>
@@ -140,7 +139,7 @@
           </button>
       </span>
       <span *ngIf="election.status==2"> 
-      <button class="add-button" mat-raised-button color="primary" (click)="getResults()">
+      <button class="add-button" mat-raised-button color="primary" (click)="getResults(election.label)">
           <b>Results</b>
           </button>
       </span> 
@@ -150,4 +149,4 @@
       <br />
     </div>
   </mat-card-content>
-</mat-card> 
+</mat-card> -->

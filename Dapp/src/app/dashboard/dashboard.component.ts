@@ -172,8 +172,9 @@ export class DashboardComponent implements OnInit {
     this.router.navigateByUrl('/otp_verification');
   }
 
-  getResults() {
+  getResults(label: string) {
     this.setStatusShort("Redirecting to Results Page ...");
+    this.web3Service.setElectionLabel(label);
     this.router.navigateByUrl("/resultsverify");
   }
 

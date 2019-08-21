@@ -1,6 +1,6 @@
 <mat-card class="card">
   <!-- Need to change header & voter turnout using actual data -->
-  <mat-card-header class="header">XYZ State Election Result<span class="span"></span></mat-card-header>
+  <mat-card-header class="header"><span>{{election_label}} Result</span> <span style="margin-left:auto"><button class="home_button" mat-raised-button (click)="home()">Home</button></span></mat-card-header>
   <p class="basic-text"> Total Voter Turnout : {{this.model.voterCount}}</p> 
   <br />
   <button class="refresh-button" mat-raised-button color="primary" id="requestViewAccess"

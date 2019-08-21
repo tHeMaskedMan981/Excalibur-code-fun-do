@@ -11,7 +11,8 @@ class Otp(object):
 
         data = {}
         # headers = { 'content-type': "application/x-www-form-urlencoded" }
-        r = requests.get('https://2factor.in/API/V1/580908f5-7fe1-11e9-ade6-0200cd936042/SMS/'+str(mob_number)+'/AUTOGEN', params = data)
+        # r = requests.get('https://2factor.in/API/V1/580908f5-7fe1-11e9-ade6-0200cd936042/SMS/'+str(mob_number)+'/AUTOGEN', params = data)
+        r = requests.get('https://2factor.in/API/V1/7e1f0dc5-c3bc-11e9-ade6-0200cd936042/SMS/'+str(mob_number)+'/AUTOGEN', params = data)
         fetched_data = r.json()
         print ("inside otp function ")
         print (fetched_data)
@@ -56,7 +57,8 @@ class Otp(object):
         print(session_id)
         
         data = {}
-        url = 'https://2factor.in/API/V1/580908f5-7fe1-11e9-ade6-0200cd936042/SMS/VERIFY/'+session_id+'/'+str(otp_input)
+        # url = 'https://2factor.in/API/V1/580908f5-7fe1-11e9-ade6-0200cd936042/SMS/VERIFY/'+session_id+'/'+str(otp_input)
+        url = 'https://2factor.in/API/V1/7e1f0dc5-c3bc-11e9-ade6-0200cd936042/SMS/VERIFY/'+session_id+'/'+str(otp_input)
         print (url)
         r = requests.get(url, params = data)
         fetched_data = r.json()

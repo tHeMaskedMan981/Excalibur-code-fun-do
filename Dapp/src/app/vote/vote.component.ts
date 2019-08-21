@@ -31,8 +31,8 @@ const web3 = new Web3(
 })
 export class VoteComponent {
   ElectionInstance: any;
-  // user = { verification_status: false };
-  user : any;
+  user = { verification_status: true };
+  // user : any;
   model = {
     uuid: null,
     constituency: "",
@@ -71,10 +71,12 @@ export class VoteComponent {
         this.ElectionInstance.deployed().then(deployed => {
           console.log(deployed);
           this.ElectionInstance = deployed;
+
+          console.log("calling get info");
+          this.get_info();
         });
       });
-    console.log("calling get info");
-    this.get_info();
+    
   }
 
   watchAccount() {
@@ -90,13 +92,13 @@ export class VoteComponent {
     let url = "/v1/kyc/info/" + this.model.uuid.toString() + "/";
     console.log("inside get info ", url);
     this.http.get(url).subscribe(
-      res => {
+      async (res) => {
         console.log(res);
         this.user = res;
-        // let has_voted = this.check_has_voted();
-        // if (has_voted){
-        //     return;
-        // }
+        let has_voted = await<any> this.check_has_voted();
+        if (has_voted){
+            return;
+        }
         this.model.constituency = res["constituency"];
 
         if (this.model.constituency != null) {

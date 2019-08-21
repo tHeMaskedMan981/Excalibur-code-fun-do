@@ -15,10 +15,14 @@
   }
 
   .small_header {
+    background-color: rgba(30, 30, 30, 0.8);
+    padding:10px;
+    color: antiquewhite;
+    border-radius: 5px;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 20px;
     line-height: normal;
-    font-family: sans-serif;
+    font-family: Impact;
   }
 
   .lhs_text {

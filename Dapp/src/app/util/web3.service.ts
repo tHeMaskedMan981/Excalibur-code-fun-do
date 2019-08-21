@@ -14,13 +14,14 @@ export class Web3Service {
     private accounts: string[];
     public ready = false;
     public uuid: number;
-    public election_status = 0;
+    // public election_status = 0;
     public election = {
           label: "Test Election",
           start_time: "April 21, 2019",
           end_time: "May 21, 2019",
           status: 0 // 0 - yet to start, 1- ongoing, 2 - completed
         };
+    public election_label: string;
 
     public accountsObservable = new Subject<string[]>();
 
@@ -53,6 +54,15 @@ export class Web3Service {
             }
         });
         setInterval(() => this.refreshAccounts(), 100000);
+    }
+
+    public setElectionLabel(label: string){
+        this.election_label = label;
+        console.log("Election label set: ", this.election_label);
+    }
+
+    public getElectionLabel(){
+        return this.election_label;
     }
 
     // public bootstrapWeb3() {

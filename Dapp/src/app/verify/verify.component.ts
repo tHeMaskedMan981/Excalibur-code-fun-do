@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Web3Service } from "../util/web3.service";
 import web3 from "web3";
 import elec_artifacts from "../../../build/contracts/Election.json";
+import { Router } from "@angular/router";
 import {
   animate,
   state,
@@ -12,30 +13,30 @@ import {
 // import { type } from 'os';
 
 const PARTIES = ["BJP", "Congress", "BSP"];
-const CONSTITUENCIES = ["mumbai"];
-
-const RESULT_DATA = [
-  {
-    "Sr. No.": 1,
-    "Constituency Name": "Bangalore",
-    "Winning Party": "BJP",
-    "Number of Votes": {
-      BJP: 2,
-      Congress: 1,
-      BSP: 0
-    },
-    vote_hashes: {
-      BJP: [
-        "0xc3eb586d884134a11785f3cae787c62c2202449eac3faf7ad1f7cf019f633d88",
-        "0x032900a7e5a67df376e806808ea9a92da5d78105982ab1e61222977c89a9f78e"
-      ],
-      Congress: [
-        "0xc528c2cdb538fe56e760958e8becfea9b49f524d527252b422cded94d749c88b"
-      ],
-      BSP: []
-    }
-  }
-];
+let CONSTITUENCIES;
+  const RESULT_DATA = [];
+// const RESULT_DATA = [
+//   {
+//     "Sr. No.": 1,
+//     "Constituency Name": "Bangalore",
+//     "Winning Party": "BJP",
+//     "Number of Votes": {
+//       BJP: 2,
+//       Congress: 1,
+//       BSP: 0
+//     },
+//     vote_hashes: {
+//       BJP: [
+//         "0xc3eb586d884134a11785f3cae787c62c2202449eac3faf7ad1f7cf019f633d88",
+//         "0x032900a7e5a67df376e806808ea9a92da5d78105982ab1e61222977c89a9f78e"
+//       ],
+//       Congress: [
+//         "0xc528c2cdb538fe56e760958e8becfea9b49f524d527252b422cded94d749c88b"
+//       ],
+//       BSP: []
+//     }
+//   }
+// ];
 
 @Component({
   selector: "app-verify",
@@ -60,25 +61,35 @@ export class VerifyComponent {
   parties = PARTIES;
   result_data = [];
 
+  election_label = 'test';
+
   model = {
     uuid: "",
     voterCount: 34,
     vote_hash: ""
   };
-  constructor(private web3Service: Web3Service) {}
+  constructor(private web3Service: Web3Service, private router: Router) {}
 
   ngOnInit() {
     this.web3Service
       .artifactsToContract(elec_artifacts)
       .then(ElectionAbstraction => {
         this.ElectionInstance = ElectionAbstraction;
-        this.ElectionInstance.deployed().then(deployed => {
+        this.ElectionInstance.deployed().then(async (deployed) => {
           console.log(deployed);
           this.ElectionInstance = deployed;
+
+          CONSTITUENCIES = await this.ElectionInstance.getConstituencies();
+          console.log(CONSTITUENCIES);
+          this.model.voterCount = await this.ElectionInstance.voterCount();
+
+          this.getResult();
         });
       });
 
-    // this.getResult();
+      this.election_label = this.web3Service.getElectionLabel();
+      console.log("Retrieved election label:", this.election_label);
+
     // this.ElectionInstance.
   }
 
@@ -107,7 +118,7 @@ export class VerifyComponent {
     for (let j = 0; j < CONSTITUENCIES.length; j++) {
       let constituency = CONSTITUENCIES[i];
       console.log(constituency);
-      result_object["No"] = i+1;
+      result_object["Sr. No."] = i+1;
       result_object["Constituency Name"] = constituency;
       let winning_party = await this.ElectionInstance.getWinner(constituency);
       result_object["Winning Party"] = winning_party;
@@ -137,5 +148,9 @@ export class VerifyComponent {
     }
     console.log("final result object : ", result_object);
     
+  }
+  
+  home() {
+    this.router.navigateByUrl('/home');
   }
 }
