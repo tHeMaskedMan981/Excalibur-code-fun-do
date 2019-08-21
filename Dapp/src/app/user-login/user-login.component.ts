@@ -10,7 +10,7 @@ import moment from 'moment';
 
 const network_config = {
   // httpradar: new http("https://api.radarrelay.com/0x/v2"),
-  RPC_PROVIDER: "http://localhost:8545/",
+  RPC_PROVIDER: "/bc//",
   NETWORK_ID: 1
 };
 
@@ -99,7 +99,7 @@ export class UserLoginComponent implements OnInit {
     });
   }
 
-  verify_user() {
+  verify_user(a1, a2) {
     this.setStatusShort("Verifying User ...");
   }
 
