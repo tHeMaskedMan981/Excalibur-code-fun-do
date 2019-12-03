@@ -92,7 +92,7 @@ export class VoteComponent {
     let url = "/v1/kyc/info/" + this.model.uuid.toString() + "/";
     console.log("inside get info ", url);
     this.http.get(url).subscribe(
-      async (res) => {
+      async (res: any) => {
         console.log(res);
         this.user = res;
         let has_voted = await<any> this.check_has_voted();
