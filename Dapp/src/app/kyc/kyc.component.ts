@@ -58,7 +58,7 @@ export class KycComponent implements OnInit {
       this.setStatus(
         "Your data is submitted for verification. Come back after some time to check the status"
       );
-      this.router.navigateByUrl("/dashboard");
+      this.router.navigateByUrl("/home");
     });
   }
 
