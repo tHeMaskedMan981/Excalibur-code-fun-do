@@ -4,6 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
+import { ChartsModule } from 'ng2-charts';
 import {
   MatButtonModule,
   MatNativeDateModule,
@@ -40,6 +41,7 @@ import { HomeComponent } from "./home/home.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { UserLoginComponent } from "./user-login/user-login.component";
 import { KycVerifierComponent } from './kyc-verifier/kyc-verifier.component';
+import { ElectionComponent } from './election/election.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,8 @@ import { KycVerifierComponent } from './kyc-verifier/kyc-verifier.component';
     HomeComponent,
     DashboardComponent,
     UserLoginComponent,
-    KycVerifierComponent
+    KycVerifierComponent,
+    ElectionComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -67,6 +70,7 @@ import { KycVerifierComponent } from './kyc-verifier/kyc-verifier.component';
     MatNativeDateModule,
     MatToolbarModule,
     BrowserModule,
+    ChartsModule,
     FormsModule,
     HttpClientModule,
     MetaModule,

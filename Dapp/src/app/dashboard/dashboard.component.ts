@@ -41,6 +41,7 @@ export class DashboardComponent implements OnInit {
   
 
   elections : any;
+  voter_data:any;
   // elections = [
   //   {
   //     label: "Test Election",
@@ -76,6 +77,10 @@ export class DashboardComponent implements OnInit {
           this.VoterDataInstance = deployed;
         });
       });
+    
+    await this.getContracts();
+    this.model.accounts = await web3.eth.getAccounts();
+    this.model.primary_account = this.model.accounts[0];
 
     if (this.web3Service.uuid){
         this.restore(this.web3Service.uuid);
@@ -90,6 +95,14 @@ export class DashboardComponent implements OnInit {
       console.log(accounts[0]);
       // this.refreshBalance();
     });
+  }
+
+  async getContracts() {
+    console.log("Retrieving contract information...");
+    let chainId = await web3.eth.net.getId();
+    console.log(voterdata_artifact["abi"]);
+    this.voter_data = new web3.eth.Contract(voterdata_artifact["abi"], voterdata_artifact["networks"][chainId.toString()]["address"]);
+    console.log(this.voter_data);
   }
 
   login(uuid: number, pass: string) {
@@ -168,8 +181,8 @@ export class DashboardComponent implements OnInit {
 
   vote() {
     this.setStatusShort("Redirecting to Voting Page ...");
-    // this.router.navigateByUrl("/vote");
-    this.router.navigateByUrl('/otp_verification');
+    this.router.navigateByUrl("/vote");
+    // this.router.navigateByUrl('/otp_verification');
   }
 
   getResults(label: string) {
@@ -183,23 +196,36 @@ export class DashboardComponent implements OnInit {
     let uuidHash = web3.utils.soliditySha3(uuid);
 
     // Get the nonce & post data to the blockchain
-    const nonce = await this.web3Service.getNonce(this.model.primary_account);
-    console.log("Got nonce: ", nonce);
-    this.VoterDataInstance.generateVoterId
-      .sendTransaction(uuidHash, voter_id, current_time, {
-        from: this.model.primary_account,
-        nonce: nonce
-      })
-      .then((res, err) => {
-        if (err !== undefined) {
-          console.error(err);
-        } else {
-          console.log(res.receipt.status);
-          if (res.receipt.status === true) {
-            this.updateVoterIdDB(this.user.uuid, voter_id);
-          }
-        }
-      });
+    // const nonce = await this.web3Service.getNonce(this.model.primary_account);
+    // console.log("Got nonce: ", nonce);
+
+    var tx_hash = await this.voter_data.methods.generateVoterId(uuidHash, voter_id, current_time).send({
+      from:this.model.accounts[0],gas:600000 
+    }).on("receipt", receipt => {
+      this.updateVoterIdDB(this.user.uuid, voter_id);
+      this.setStatus("Success! Voter Id generated and stored on the blockchain");
+      console.log("added");
+      console.log(receipt);
+    });
+    console.log("Tx hash : " , tx_hash);
+
+    // Using metamask and truffle contracts 
+
+    // this.VoterDataInstance.generateVoterId
+    //   .sendTransaction(uuidHash, voter_id, current_time, {
+    //     from: this.model.primary_account,
+    //     nonce: nonce
+    //   })
+    //   .then((res, err) => {
+    //     if (err !== undefined) {
+    //       console.error(err);
+    //     } else {
+    //       console.log(res.receipt.status);
+    //       if (res.receipt.status === true) {
+    //         this.updateVoterIdDB(this.user.uuid, voter_id);
+    //       }
+    //     }
+    //   });
   }
 
   logout() {
@@ -211,7 +237,6 @@ export class DashboardComponent implements OnInit {
       this.setStatusShort("Logged out Successfully!")
       this.router.navigateByUrl("/dashboard");
       
-
   }
 
   refreshElections(){

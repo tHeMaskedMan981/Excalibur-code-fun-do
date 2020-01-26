@@ -10,11 +10,12 @@ add-button {
 
 th {
     font-size: 11pt;
-    text-align: center;
+    /* text-align: center; */
     background-color: rgb(190,190,190);
 }
 
 td {
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    /* text-align: center   */
     
 }

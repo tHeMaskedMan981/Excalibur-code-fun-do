@@ -1,6 +1,6 @@
-<mat-card class="card">
+<mat-card class="card ">
   <mat-card-header class="header"><span>Voter Registration</span> <span style="margin-left:auto"><button class="home_button" mat-raised-button (click)="home()">Home</button></span></mat-card-header>
-  <mat-card-content>
+  <mat-card-content class="form">
   <br>
   <form  class="example-form">
     <mat-form-field class="example-full-width">
@@ -21,14 +21,14 @@
   <mat-datepicker #picker></mat-datepicker>
 </mat-form-field>
   <br />
-    <mat-form-field class="example-full-width">
+   <!-- <mat-form-field class="example-full-width">
       <input matInput placeholder="Email ID" #gm>
     </mat-form-field>
     <br />
     <mat-form-field class="example-full-width">
       <input matInput placeholder="Address" #ad>
     </mat-form-field>
-    <br />
+    <br /> -->
     <mat-form-field class="example-full-width">
     <mat-select name="constituency" placeholder="Constituency" #constituency>
       <mat-option *ngFor="let constituency of constituencies" [value]="constituency.name">{{constituency.name}}</mat-option>
@@ -39,7 +39,7 @@
       <input matInput placeholder="Password" #pass type="password">
     </mat-form-field>
     <br />
-    <button class="add-button" mat-raised-button color="primary" (click)="add(fn.value,an.value,pn.value,dob,gm.value,ad.value,pass.value, constituency.value);">
+    <button class="add-button" mat-raised-button color="primary" (click)="add(fn.value,an.value,pn.value,dob,pass.value, constituency.value);">
       <b>Submit</b>
     </button>
   </form>

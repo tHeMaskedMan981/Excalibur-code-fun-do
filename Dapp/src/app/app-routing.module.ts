@@ -8,6 +8,7 @@ import { KycComponent } from './kyc/kyc.component';
 import { AdminComponent } from './admin/admin.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ElectionComponent } from './election/election.component';
 import { KycVerifierComponent } from './kyc-verifier/kyc-verifier.component';
 
 
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'resultsverify', component: VerifyComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'election/:id', component: ElectionComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
  

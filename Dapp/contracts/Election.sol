@@ -70,6 +70,22 @@ contract Election {
     function getConstituencies() public view returns(string[] memory){
         return constituencies;
     }
+    function getParties() public view returns(string[] memory){
+        return parties;
+    }
+
+    function addElectionDetails(string[] memory _constituencies, string[] memory _parties) public onlyEcHead {
+        constituencies.length = 0;
+        parties.length = 0;
+        for (uint i=0; i<_constituencies.length; i++){
+            constituencies.push(_constituencies[i]);
+        }
+        for (uint i=0; i<_parties.length; i++){
+            parties.push(_parties[i]);
+        }
+        // constituencies = _constituencies;
+        // parties = _parties;
+    }
 
     function registerVote(bytes32 uuid_hash, string memory constituency, string memory party,  bytes32 vote_hash) public {
         // require(!vaultSealed);

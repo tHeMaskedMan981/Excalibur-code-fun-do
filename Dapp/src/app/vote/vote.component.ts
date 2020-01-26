@@ -31,6 +31,7 @@ const web3 = new Web3(
 })
 export class VoteComponent {
   ElectionInstance: any;
+  election:any;
   user = { verification_status: true };
   // user : any;
   model = {
@@ -76,7 +77,12 @@ export class VoteComponent {
           this.get_info();
         });
       });
-    
+      
+
+      await this.getContracts();
+      this.model.accounts = await web3.eth.getAccounts();
+      this.model.primary_account = this.model.accounts[0];
+      this.get_info();
   }
 
   watchAccount() {
@@ -87,6 +93,13 @@ export class VoteComponent {
       // this.refreshBalance();
     });
   }
+
+  async getContracts() {
+    console.log("Retrieving contract information...")
+    let chainId = await web3.eth.net.getId()
+    this.election = new web3.eth.Contract(election_artifact.abi, election_artifact["networks"][chainId.toString()]["address"]);
+    console.log(this.election);
+}
 
   get_info() {
     let url = "/v1/kyc/info/" + this.model.uuid.toString() + "/";
@@ -144,32 +157,47 @@ export class VoteComponent {
       vote_hash
     );
     
-    const nonce = await this.web3Service.getNonce(this.model.primary_account);
-    console.log("Got nonce: ", nonce);
+    // const nonce = await this.web3Service.getNonce(this.model.primary_account);
+    // console.log("Got nonce: ", nonce);
+    
+    var tx_hash = await this.election.methods.registerVote(voter_id_hash,
+      this.model.constituency,
+      this.model.selected_party,
+      vote_hash).send({
+      from:this.model.accounts[0],gas:600000 
+    }).on("receipt", receipt => {
+      this.setStatus("Verified Successfully!");
+      console.log("added");
+      console.log(receipt);
+    });
+    console.log("Tx hash : " , tx_hash);
+    this.model.show_voting_info = false;
+    this.setStatus("Success! Vote Confirmed and stored on blockchain");
 
-    this.ElectionInstance.registerVote
-      .sendTransaction(voter_id_hash,
-        this.model.constituency,
-        this.model.selected_party,
-        vote_hash, {
-        from: this.model.primary_account,
-        nonce: nonce
-      })
-      .then((res, err) => {
-        if (err !== undefined) {
-          console.error(err);
-        } else {
-          console.log(res.receipt.status);
-          if (res.receipt.status === true) {
-            console.log("block mined");
-            console.log(res.receipt);
-            this.model.show_voting_info = false;
-            this.setStatus(
-                "Vote Confirmed! You can view the transaction on etherscan"
-            );
-          }
-        }
-      });
+
+    // this.ElectionInstance.registerVote
+    //   .sendTransaction(voter_id_hash,
+    //     this.model.constituency,
+    //     this.model.selected_party,
+    //     vote_hash, {
+    //     from: this.model.primary_account,
+    //     nonce: nonce
+    //   })
+    //   .then((res, err) => {
+    //     if (err !== undefined) {
+    //       console.error(err);
+    //     } else {
+    //       console.log(res.receipt.status);
+    //       if (res.receipt.status === true) {
+    //         console.log("block mined");
+    //         console.log(res.receipt);
+    //         this.model.show_voting_info = false;
+    //         this.setStatus(
+    //             "Vote Confirmed! You can view the transaction on etherscan"
+    //         );
+    //       }
+    //     }
+    //   });
 
     // let tx_hash = await this.ElectionInstance.registerVote(
     //   voter_id_hash,

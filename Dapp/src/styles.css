@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 /* @import "~@angular/material/prebuilt-themes/indigo-pink.css"; */
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~bootstrap/dist/css/bootstrap.min.css';
 
 .header {
     font-weight: bold;
@@ -14,6 +15,10 @@
     border-radius: 5px;
   }
 
+  .form {
+    text-align: center;
+  }
+  
   .small_header {
     background-color: rgba(30, 30, 30, 0.8);
     padding:10px;
@@ -33,6 +38,15 @@
     margin-left: 10pt;
   }
 
+  .add-button, .submit-button, .election-button, .refresh-button, .verify-button{
+    background: rgba(30, 30, 30, 0.9);
+    font-family:Impact;
+  }
+
+  .normal-button{
+    background: rgba(30, 30, 30, 0.9);
+    font-family:Impact;
+  }
   .app-header {
     font-size: 50px;
     font-weight: 700;
@@ -94,6 +108,5 @@
     background-size: 110%;
     background-position: center;
   }
-
   
   

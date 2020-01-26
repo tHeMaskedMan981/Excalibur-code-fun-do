@@ -1,7 +1,7 @@
 <mat-card *ngIf="!this.model.uuid" class="card">
 <mat-card-header class="header"><span>Voter Login</span> <span style="margin-left:auto"><button class="home_button" mat-raised-button (click)="home()">Home</button></span> </mat-card-header>
 <br />
-  <mat-card-content>
+  <mat-card-content class="form">
   <div>
   <!-- <input #heroName /> -->
   <form class="example-form">
@@ -38,8 +38,7 @@
       <p> <span class="lhs_text">UUID:</span> <span class="basic_text"> {{user.uuid}}</span></p>
       <p> <span class="lhs_text"> Date of Birth:</span> <span class="basic_text"> {{user.dob_string}}</span> </p>
       <p> <span class="lhs_text"> Constituency:</span> <span class="basic_text"> {{user.constituency}}</span> </p>
-      <p> <span class="lhs_text"> Address:</span> <span class="basic_text"> {{user.address}}</span> </p>
-
+     
       <br />
       <br />
       <p *ngIf="user.verification_status"> <span class="lhs_text"> Verification Status:</span> <span class="basic_text"> Verified </span></p>
@@ -101,7 +100,7 @@
           <b>Vote</b>
           </button>
       </span>
-      <span *ngIf="election.status==2"> 
+      <span *ngIf="election.status>=2"> 
       <button class="add-button" mat-raised-button color="primary" (click)="getResults(election.label)">
           <b>Results</b>
           </button>

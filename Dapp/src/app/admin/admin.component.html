@@ -24,7 +24,13 @@
       <ng-container matColumnDef="Action">
         <th mat-header-cell *matHeaderCellDef> <b> Action </b> </th>
         <td mat-cell *matCellDef="let election">
-          <span *ngIf="election.status==0"> 
+      <span> 
+        <button class="election-button" mat-raised-button color="primary" routerLink="/election/1">
+          <b>View</b>
+        </button>
+      </span>
+      <!--
+      <span *ngIf="election.status==0"> 
         <button class="election-button" mat-raised-button color="primary" (click)="updateElection(1)">
           <b>Start Election</b>
         </button>
@@ -39,6 +45,7 @@
           <b>Calculate Votes</b>
           </button>
       </span>
+      -->
         </td>
       </ng-container>
 

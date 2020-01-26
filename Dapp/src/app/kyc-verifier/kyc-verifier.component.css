@@ -4,7 +4,7 @@ table {
 
   th {
     font-size: 11pt;
-    text-align: center;
+    /* text-align: center; */
     background-color: rgb(190,190,190);
   }
 

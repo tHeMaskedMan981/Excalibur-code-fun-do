@@ -8,7 +8,6 @@ import voterdata_artifact from "../../../build/contracts/VoterData.json";
 import moment from "moment";
 
 const network_config = {
-  // httpradar: new http("https://api.radarrelay.com/0x/v2"),
   RPC_PROVIDER: "http://localhost:8545/",
   NETWORK_ID: 1
 };
@@ -24,7 +23,7 @@ const web3 = new Web3(
 })
 export class KycVerifierComponent implements OnInit {
   VoterDataInstance: any;
-
+  voter_data:any;
   // Dummy verifier (in actual practice, login mechanism would be used)
   verifier = {
     name: "Amit Singh"
@@ -37,7 +36,6 @@ export class KycVerifierComponent implements OnInit {
     "Name",
     "UUID",
     "Date of Birth",
-    "Address",
     "Constituency",
     "Status"
   ];
@@ -72,6 +70,10 @@ export class KycVerifierComponent implements OnInit {
           this.VoterDataInstance = deployed;
         });
       });
+
+    await this.getContracts();
+    this.model.accounts = await web3.eth.getAccounts();
+    this.model.primary_account = this.model.accounts[0];
   }
 
   watchAccount() {
@@ -82,6 +84,13 @@ export class KycVerifierComponent implements OnInit {
       // this.refreshBalance();
     });
   }
+
+  async getContracts() {
+    console.log("Retrieving contract information...")
+    let chainId = await web3.eth.net.getId()
+    this.voter_data = new web3.eth.Contract(voterdata_artifact.abi, voterdata_artifact["networks"][chainId.toString()]["address"]);
+    console.log(this.voter_data);
+}
 
   setStatus(status) {
     this.matSnackBar.open(status, null, { duration: 3000 });
@@ -103,31 +112,42 @@ export class KycVerifierComponent implements OnInit {
     
     try{
       // Get the nonce & post data to the blockchain
-      const nonce  = await this.web3Service.getNonce(this.model.primary_account);
-      console.log("Got nonce: ", nonce);
+      // const nonce  = await this.web3Service.getNonce(this.model.primary_account);
+      // console.log("Got nonce: ", nonce);
       console.log("account from : ", this.model.primary_account);
-      this.VoterDataInstance.kycVerify.sendTransaction(uuidHash, voter.name, voter_dob, current_time, {from: this.model.primary_account, nonce: nonce})
-        .then((res, err) => {
-          if(err !== undefined){
-            console.error("Error!!!!", err);
-            this.setStatus("Error: Unable to verify! Please try again later");
-            // voter.verification_status = "unverified";
-          }
-          else{
-            console.log(res.receipt.status);
-            if(res.receipt.status == true){
-              console.log("receipt : ", res.receipt);
-              this.updateVerificationStatusDB(voter.name, voter.uuid);
-            }
-            else{
-              console.log("transaction failed. check receipt : ", res.receipt);
-              this.setStatus("Error: Unable to verify! Please try again later");
 
-            }
+      var tx_hash = await this.voter_data.methods.kycVerify(uuidHash, voter.name, voter_dob, current_time).send({
+        from:this.model.accounts[0],gas:600000 
+      }).on("receipt", receipt => {
+        this.updateVerificationStatusDB(voter.name, voter.uuid);
+        this.setStatus("Verified Successfully!");
+        console.log("added");
+        console.log(receipt);
+      });
+      console.log("Tx hash : " , tx_hash);
 
-          }
-        }
-      );
+      // this.VoterDataInstance.kycVerify.sendTransaction(uuidHash, voter.name, voter_dob, current_time, {from: this.model.primary_account, nonce: nonce})
+      //   .then((res, err) => {
+      //     if(err !== undefined){
+      //       console.error("Error!!!!", err);
+      //       this.setStatus("Error: Unable to verify! Please try again later");
+      //       // voter.verification_status = "unverified";
+      //     }
+      //     else{
+      //       console.log(res.receipt.status);
+      //       if(res.receipt.status == true){
+      //         console.log("receipt : ", res.receipt);
+      //         this.updateVerificationStatusDB(voter.name, voter.uuid);
+      //       }
+      //       else{
+      //         console.log("transaction failed. check receipt : ", res.receipt);
+      //         this.setStatus("Error: Unable to verify! Please try again later");
+
+      //       }
+
+      //     }
+      //   }
+      // );
     }
     catch(err){
       console.log("Error!!", err);

@@ -73,16 +73,7 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  async calculateVotes() {
-    var tx_hash = await this.ElectionInstance.calculateVotes({
-      from: this.model.accounts[0]
-    }).on("receipt", receipt => {
-      console.log("Calculated");
-      console.log(receipt);
-    });
-
-    console.log(tx_hash);
-  }
+  
   refreshElections(){
     console.log("refreshing elections..");
     this.getElections();
@@ -102,23 +93,7 @@ export class AdminComponent implements OnInit {
     );
   }
 
-  updateElection(status:number) {
-    let data = {
-      label:this.elections[0].label,
-      status
-    } 
-    let url = "/v1/election/update_status/";
-    console.log("inside update elections ", url);
-    this.http.post(url, data).subscribe(
-      res => {
-        console.log(res);
-        this.elections[0] =res;
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
+  
 
   home() {
     this.router.navigateByUrl('/home');

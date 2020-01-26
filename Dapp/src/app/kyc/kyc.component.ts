@@ -32,8 +32,6 @@ export class KycComponent implements OnInit {
     uuid: number,
     mobile: number,
     dob: Date,
-    email: string,
-    address: string,
     password: string,
     constituency: string
   ): void {
@@ -44,8 +42,6 @@ export class KycComponent implements OnInit {
       mobile,
       dob:this.dob.getTime(),
       dob_string:this.dob.toDateString(),
-      email,
-      address,
       password,
       constituency
     };
