@@ -96,8 +96,8 @@ export class VoteComponent {
 
   async getContracts() {
     console.log("Retrieving contract information...")
-    let chainId = await web3.eth.net.getId()
-    this.election = new web3.eth.Contract(election_artifact.abi, election_artifact["networks"][chainId.toString()]["address"]);
+    let chainId = await web3.eth.net.getId();
+    this.election = new web3.eth.Contract(election_artifact.abi as any, election_artifact["networks"][chainId.toString()]["address"]);
     console.log(this.election);
 }
 

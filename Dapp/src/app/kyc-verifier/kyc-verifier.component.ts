@@ -88,7 +88,7 @@ export class KycVerifierComponent implements OnInit {
   async getContracts() {
     console.log("Retrieving contract information...")
     let chainId = await web3.eth.net.getId()
-    this.voter_data = new web3.eth.Contract(voterdata_artifact.abi, voterdata_artifact["networks"][chainId.toString()]["address"]);
+    this.voter_data = new web3.eth.Contract(voterdata_artifact.abi as any, voterdata_artifact["networks"][chainId.toString()]["address"]);
     console.log(this.voter_data);
 }
 

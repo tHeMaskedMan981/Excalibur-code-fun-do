@@ -113,7 +113,7 @@ export class ElectionComponent implements OnInit {
   async getContracts() {
     console.log("Retrieving contract information...")
     let chainId = await web3.eth.net.getId()
-    this.electionInstance = new web3.eth.Contract(election_artifact.abi, election_artifact["networks"][chainId.toString()]["address"]);
+    this.electionInstance = new web3.eth.Contract(election_artifact.abi as any, election_artifact["networks"][chainId.toString()]["address"]);
     console.log("Here is the contract object", this.electionInstance);
 }
 
@@ -158,7 +158,7 @@ export class ElectionComponent implements OnInit {
       res => {
         console.log(res);
         this.elections[0] =res;
-        this.election = res;
+        this.election = res as any;
         if(status==1){
           this.setStatusShort("Success! Voting phase started");
         }

@@ -24,7 +24,9 @@ import {
   MatSortModule,
   MatGridListModule,
   MatMenuModule,
-  MatChipsModule
+  MatChipsModule,
+  MatSlideToggleModule,
+  MatSlideToggle,
 } from "@angular/material";
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { AppComponent } from "./app.component";
@@ -65,6 +67,7 @@ import { ElectionComponent } from './election/election.component';
     MatCardModule,
     MatDatepickerModule,
     // MatMomentDateModule,
+    MatSlideToggleModule,
     MatFormFieldModule,
     MatInputModule,
     MatNativeDateModule,
