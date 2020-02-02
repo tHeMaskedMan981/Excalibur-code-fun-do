@@ -14,8 +14,8 @@ Excalibur voting solution is a blockchain based voting platform, which is made k
 
 The complete project is deployed on Azure using Azure Blockchain Services and the Azure Virtual Machines.
 
-- RPC URL for deployment on Azure Blockchain Services: [https://excalibursb2pz2block.blockchain.azure.com:3200/Zlihv_PEgvSkmq51HcTfTq3z](https://excalibursb2pz2block.blockchain.azure.com:3200/Zlihv_PEgvSkmq51HcTfTq3z)
-- Public IP for VM: 
+- __RPC URL for deployment on Azure Blockchain Services:__ [https://excalibursb2pz2block.blockchain.azure.com:3200/Zlihv_PEgvSkmq51HcTfTq3z](https://excalibursb2pz2block.blockchain.azure.com:3200/Zlihv_PEgvSkmq51HcTfTq3z)
+- __Public IP for VM:__ 13.76.229.32 _(Ubuntu 18.04 Server which can be connected via SSH)_
 
 _All the Azure Deployments are linked to the __Student Subscription__ associated with the account tezansahu@gmail.com_
 
