@@ -10,7 +10,10 @@ import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ElectionComponent } from './election/election.component';
 import { KycVerifierComponent } from './kyc-verifier/kyc-verifier.component';
-
+import { Login2Component } from './login2/login2.component';
+import { RegisterComponent } from './register/register.component';
+import { BegVotingComponent } from './beg-voting/beg-voting.component';
+import { CryptonComponent } from './crypton/crypton.component';
 
 const routes: Routes = [
   { path: 'kyc', component: KycComponent },
@@ -24,6 +27,13 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'election/:id', component: ElectionComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'login2', component: Login2Component },
+  { path: 'register', component: RegisterComponent },
+  { path: 'beg_voting', component: BegVotingComponent },
+
+
+  // try
+  { path: 'crypton', component: CryptonComponent }
 ];
  
 @NgModule({

@@ -44,6 +44,10 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { UserLoginComponent } from "./user-login/user-login.component";
 import { KycVerifierComponent } from './kyc-verifier/kyc-verifier.component';
 import { ElectionComponent } from './election/election.component';
+import { Login2Component } from './login2/login2.component';
+import { RegisterComponent } from './register/register.component';
+import { BegVotingComponent } from './beg-voting/beg-voting.component';
+import { CryptonComponent } from './crypton/crypton.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +62,11 @@ import { ElectionComponent } from './election/election.component';
     DashboardComponent,
     UserLoginComponent,
     KycVerifierComponent,
-    ElectionComponent
+    ElectionComponent,
+    Login2Component,
+    RegisterComponent,
+    BegVotingComponent,
+    CryptonComponent
   ],
   imports: [
     BrowserAnimationsModule,

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {MatInputModule} from '@angular/material/input';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+  gen: boolean; 
+  uname: string ='';
+  uid: string = '';
+  passwd: string = '';
   links = [
     {
       label: 'Voter Registration',
@@ -29,6 +34,11 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.gen=false;
+  }
+
+  register() {
+   
   }
 
 }
